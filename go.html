@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mengarahkan…</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #080C14;
+      --surface:  #0F1623;
+      --surface2: #162030;
+      --border:   #1E2D42;
+      --accent:   #38BDF8;
+      --accent2:  #0EA5E9;
+      --success:  #34D399;
+      --error:    #F87171;
+      --text:     #E2E8F0;
+      --muted:    #64748B;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 1.5rem 1rem 3rem;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap { position:relative; z-index:1; width:100%; max-width:560px; }
+
+    /* Logo */
+    .logo {
+      text-align: center;
+      padding: 1.25rem 0 1.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .9rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+    }
+    .logo a { color: var(--accent); text-decoration: none; }
+
+    /* ── AD SLOT ──────────────────────────────────── */
+    .ad-slot {
+      width: 100%;
+      min-height: 90px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .ad-label {
+      font-size: .75rem;
+      color: var(--muted);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      position: absolute;
+      top: .5rem;
+      left: .75rem;
+    }
+    /* Ganti konten di dalam .ad-inner dengan kode iklan anda */
+    .ad-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      min-height: 90px;
+      color: var(--muted);
+      font-size: .85rem;
+      text-align: center;
+      gap: .25rem;
+    }
+    /* ─────────────────────────────────────────────── */
+
+    /* Main card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem 1.5rem;
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
+
+    /* Destination URL */
+    .dest-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .5rem;
+    }
+    .dest-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .82rem;
+      color: var(--accent);
+      word-break: break-all;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: .65rem .85rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    /* Countdown */
+    .countdown-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 1.5rem;
+    }
+    .countdown-ring {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .countdown-ring svg {
+      transform: rotate(-90deg);
+      width: 80px;
+      height: 80px;
+    }
+    .ring-bg { stroke: var(--surface2); }
+    .ring-fg {
+      stroke: var(--accent);
+      stroke-linecap: round;
+      transition: stroke-dashoffset .9s linear;
+    }
+    .countdown-num {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .countdown-text {
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    /* Button */
+    #btnGo {
+      width: 100%;
+      padding: .95rem;
+      background: var(--accent);
+      color: #080C14;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .2s, transform .1s, opacity .3s;
+      position: relative;
+    }
+    #btnGo:disabled {
+      background: var(--surface2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      cursor: not-allowed;
+    }
+    #btnGo:not(:disabled):hover { background: var(--accent2); }
+    #btnGo:not(:disabled):active { transform: scale(.98); }
+
+    /* Second ad slot (banner bawah — opsional) */
+    .ad-slot-bottom {
+      width: 100%;
+      min-height: 60px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .ad-inner-sm {
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    /* Loading state */
+    .loading-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-card {
+      background: rgba(248,113,113,.08);
+      border: 1px solid rgba(248,113,113,.25);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      color: var(--error);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="logo">⚡ <a href="index.html">shortlink</a></div>
+
+  <!-- ── AD SLOT ATAS (728×90 atau 320×50 mobile) ──────────────── -->
+  <!-- PETUNJUK: Ganti konten .ad-inner dengan kode iklan anda.     -->
+  <!-- Contoh AdSense: tempel <ins class="adsbygoogle"> di sini.    -->
+  <div class="ad-slot" style="min-height:100px;">
+    <span class="ad-label">Iklan</span>
+    <div class="ad-inner">
+      <!-- GANTI BAGIAN INI DENGAN KODE IKLAN ANDA -->
+      <span>[ Slot Iklan — 728×90 / 320×50 ]</span>
+      <span style="font-size:.75rem">Daftarkan akun iklan untuk mengaktifkan monetisasi</span>
+      <!-- AKHIR SLOT IKLAN -->
+    </div>
+  </div>
+  <!-- ─────────────────────────────────────────────────────────── -->
+
+  <!-- Loading state (tampil saat fetch) -->
+  <div class="loading-card" id="loadingCard">
+    <div class="spinner"></div>
+    <p>Memuat tautan…</p>
+  </div>
+
+  <!-- Error state -->
+  <div class="error-card" id="errorCard" style="display:none">
+    <p style="font-size:1.5rem;margin-bottom:.5rem">🔗</p>
+    <p id="errorMsg">Tautan tidak ditemukan atau sudah kedaluwarsa.</p>
+    <a href="index.html" style="display:inline-block;margin-top:1rem;color:var(--accent);font-size:.9rem">← Buat tautan baru</a>
+  </div>
+
+  <!-- Main card (tampil setelah fetch berhasil) -->
+  <div class="card" id="mainCard" style="display:none">
+    <div class="dest-label">Anda akan diarahkan ke</div>
+    <div class="dest-url" id="destUrl"></div>
+
+    <div class="countdown-wrap">
+      <div class="countdown-ring">
+        <svg viewBox="0 0 80 80">
+          <circle class="ring-bg" cx="40" cy="40" r="34" fill="none" stroke-width="6"/>
+          <circle class="ring-fg" id="ringFg" cx="40" cy="40" r="34" fill="none" stroke-width="6"
+            stroke-dasharray="213.6" stroke-dashoffset="0"/>
+        </svg>
+        <div class="countdown-num" id="countNum">10</div>
+      </div>
+      <div class="countdown-text">detik sebelum tombol aktif</div>
+    </div>
+
+    <button type="button" id="btnGo" disabled>
+      Menghitung… (<span id="btnSec">10</span>)
+    </button>
+  </div>
+
+  <!-- ── AD SLOT BAWAH (banner kecil) ─────────────────────────── -->
+  <div class="ad-slot-bottom">
+    <div class="ad-inner-sm">
+      <!-- GANTI BAGIAN INI DENGAN KODE IKLAN ANDA -->
+      [ Slot Iklan Bawah — 320×50 ]
+      <!-- AKHIR SLOT IKLAN -->
+    </div>
+  </div>
+  <!-- ─────────────────────────────────────────────────────────── -->
+
+  <footer>
+    Layanan pemendek URL oleh <a href="index.html">Shortlink</a>
+  </footer>
+</div>
+
+<script>
+  // ─────────────────────────────────────────
+  // KONFIGURASI
+  const WORKER_URL     = 'https://your-worker.workers.dev';
+  const COUNTDOWN_SECS = 10; // durasi countdown (detik)
+  // ─────────────────────────────────────────
+
+  const params     = new URLSearchParams(location.search);
+  const code       = params.get('c');
+  const loadingEl  = document.getElementById('loadingCard');
+  const errorEl    = document.getElementById('errorCard');
+  const mainEl     = document.getElementById('mainCard');
+  const destUrlEl  = document.getElementById('destUrl');
+  const btnGo      = document.getElementById('btnGo');
+  const countNumEl = document.getElementById('countNum');
+  const btnSecEl   = document.getElementById('btnSec');
+  const ringFg     = document.getElementById('ringFg');
+
+  const CIRCUMFERENCE = 2 * Math.PI * 34; // ~213.6
+
+  function showError(msg) {
+    loadingEl.style.display = 'none';
+    if (msg) document.getElementById('errorMsg').textContent = msg;
+    errorEl.style.display = 'block';
+  }
+
+  function startCountdown(targetUrl) {
+    loadingEl.style.display = 'none';
+    mainEl.style.display = 'block';
+
+    let sec = COUNTDOWN_SECS;
+    ringFg.style.strokeDashoffset = 0;
+
+    const tick = () => {
+      sec--;
+      countNumEl.textContent = sec;
+      btnSecEl.textContent   = sec;
+
+      const progress = (COUNTDOWN_SECS - sec) / COUNTDOWN_SECS;
+      ringFg.style.strokeDashoffset = CIRCUMFERENCE * progress;
+
+      if (sec <= 0) {
+        btnGo.disabled    = false;
+        btnGo.textContent = 'Lanjutkan ke Tujuan →';
+        btnGo.onclick     = () => window.location.href = targetUrl;
+        return;
+      }
+      setTimeout(tick, 1000);
+    };
+
+    setTimeout(tick, 1000);
+  }
+
+  async function init() {
+    if (!code) return showError('Kode tautan tidak ditemukan di URL.');
+
+    try {
+      const res  = await fetch(`${WORKER_URL}/api/link/${encodeURIComponent(code)}`);
+      const data = await res.json();
+
+      if (!res.ok || !data.original_url) {
+        return showError(data.error || 'Tautan tidak ditemukan.');
+      }
+
+      // Tampilkan URL tujuan (sebagian disembunyikan untuk keamanan)
+      const u = new URL(data.original_url);
+      destUrlEl.textContent = `${u.origin}${u.pathname.length > 30 ? u.pathname.slice(0,30)+'…' : u.pathname}`;
+
+      startCountdown(data.original_url);
+
+    } catch (e) {
+      showError('Gagal memuat tautan. Periksa koneksi internet anda.');
+    }
+  }
+
+  init();
+</script>
+</body>
+</html>

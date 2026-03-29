@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pemendek URL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #080C14;
+      --surface:  #0F1623;
+      --surface2: #162030;
+      --border:   #1E2D42;
+      --accent:   #38BDF8;
+      --accent2:  #0EA5E9;
+      --success:  #34D399;
+      --error:    #F87171;
+      --text:     #E2E8F0;
+      --muted:    #64748B;
+      --mono:     'JetBrains Mono', monospace;
+      --sans:     'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* Grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrap { position: relative; z-index: 1; width: 100%; max-width: 600px; }
+
+    /* Header */
+    header { text-align: center; padding: 3rem 0 2.5rem; }
+    .logo {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .logo span { opacity: .5; }
+    h1 {
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: #fff;
+    }
+    h1 em { font-style: normal; color: var(--accent); }
+    .sub {
+      margin-top: .75rem;
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.6;
+    }
+
+    /* Card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    label {
+      display: block;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .5rem;
+    }
+
+    input[type="url"], input[type="text"] {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: .85rem 1rem;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: .95rem;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(56,189,248,.12);
+    }
+    input::placeholder { color: var(--muted); }
+
+    .row { display: flex; gap: .75rem; align-items: flex-end; }
+    .row > * { flex: 1; }
+
+    .prefix-wrap { position: relative; }
+    .prefix {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .82rem;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .prefix-wrap input { padding-left: 6.5rem; font-family: var(--mono); font-size: .9rem; }
+
+    button[type="submit"] {
+      width: 100%;
+      margin-top: 1.25rem;
+      padding: .9rem;
+      background: var(--accent);
+      color: #080C14;
+      font-family: var(--sans);
+      font-size: .95rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+    }
+    button[type="submit"]:hover { background: var(--accent2); }
+    button[type="submit"]:active { transform: scale(.98); }
+    button[type="submit"]:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* Result */
+    .result {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--success);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .result.show { display: block; animation: fadeIn .3s ease; }
+    .result-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--success);
+      margin-bottom: .6rem;
+    }
+    .result-url {
+      font-family: var(--mono);
+      font-size: .95rem;
+      color: #fff;
+      word-break: break-all;
+      margin-bottom: .85rem;
+    }
+    .btn-row { display: flex; gap: .6rem; flex-wrap: wrap; }
+    .btn-copy, .btn-go {
+      padding: .55rem 1rem;
+      border-radius: 8px;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: opacity .2s;
+    }
+    .btn-copy { background: var(--success); color: #080C14; }
+    .btn-go   { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+    .btn-copy:hover, .btn-go:hover { opacity: .85; }
+
+    /* Error */
+    .error-msg {
+      display: none;
+      background: rgba(248,113,113,.1);
+      border: 1px solid rgba(248,113,113,.3);
+      border-radius: 10px;
+      padding: .85rem 1rem;
+      color: var(--error);
+      font-size: .9rem;
+      margin-top: .75rem;
+    }
+    .error-msg.show { display: block; animation: fadeIn .3s ease; }
+
+    /* Nav */
+    nav { text-align: center; margin-top: 2rem; }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .9rem;
+      margin: 0 .75rem;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    @keyframes fadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">⚡ <span>//</span> shortlink</div>
+    <h1>Pendekkan URL<br>dalam <em>satu klik</em></h1>
+    <p class="sub">Gratis, cepat, dan bisa kamu pantau statistik kliknya.</p>
+  </header>
+
+  <!-- Result -->
+  <div class="result" id="result">
+    <div class="result-label">✓ Tautan siap digunakan</div>
+    <div class="result-url" id="resultUrl"></div>
+    <div class="btn-row">
+      <button type="button" class="btn-copy" id="btnCopy">Salin Tautan</button>
+      <button type="button" class="btn-go" id="btnGo">Buka Tautan</button>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="card">
+    <div style="margin-bottom:1.25rem">
+      <label for="urlInput">URL Asli</label>
+      <input type="url" id="urlInput" placeholder="https://contoh.com/halaman-yang-sangat-panjang" required />
+    </div>
+
+    <div style="margin-bottom:.5rem">
+      <label for="titleInput">Judul (opsional)</label>
+      <input type="text" id="titleInput" placeholder="Nama tautan untuk memudahkan identifikasi" />
+    </div>
+
+    <details style="margin-top:1rem">
+      <summary style="cursor:pointer;font-size:.85rem;color:var(--muted);user-select:none;list-style:none;">
+        + Kode kustom (opsional)
+      </summary>
+      <div style="margin-top:.85rem">
+        <label for="codeInput">Kode kustom</label>
+        <div class="prefix-wrap">
+          <span class="prefix" id="prefixText">/r/</span>
+          <input type="text" id="codeInput" placeholder="contoh-kode" maxlength="20" />
+        </div>
+      </div>
+    </details>
+
+    <div class="error-msg" id="errorMsg"></div>
+    <button type="submit" id="btnSubmit" onclick="handleShorten()">Pendekkan Sekarang</button>
+  </div>
+
+  <nav>
+    <a href="dashboard.html">📊 Dashboard</a>
+  </nav>
+</div>
+
+<script>
+  // ─────────────────────────────────────────
+  // KONFIGURASI — ganti dengan URL Worker anda
+  // ─────────────────────────────────────────
+  const WORKER_URL = 'https://your-worker.workers.dev';
+  // Untuk go.html, pastikan path benar. Worker ini menghasilkan:
+  // short_url = WORKER_URL + '/api/link/' + code
+  // Halaman interstitial ada di go.html?c=CODE
+  // Anda bisa deploy go.html di GitHub Pages, lalu ubah bagian ini:
+  const GO_PAGE   = 'https://yourdomain.com/go.html';
+  // ─────────────────────────────────────────
+
+  const btnSubmit = document.getElementById('btnSubmit');
+  const errorMsg  = document.getElementById('errorMsg');
+  const result    = document.getElementById('result');
+  const resultUrl = document.getElementById('resultUrl');
+
+  async function handleShorten() {
+    const url   = document.getElementById('urlInput').value.trim();
+    const title = document.getElementById('titleInput').value.trim();
+    const code  = document.getElementById('codeInput').value.trim();
+
+    errorMsg.className = 'error-msg';
+    result.className   = 'result';
+
+    if (!url) return showError('Masukkan URL terlebih dahulu.');
+
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = 'Memproses…';
+
+    try {
+      const res = await fetch(`${WORKER_URL}/api/shorten`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ original_url: url, title: title || undefined, custom_code: code || undefined })
+      });
+      const data = await res.json();
+
+      if (!res.ok) return showError(data.error || 'Terjadi kesalahan.');
+
+      // Tampilkan tautan interstitial (bukan direct Worker link)
+      const interstitialUrl = `${GO_PAGE}?c=${data.code}`;
+      resultUrl.textContent = interstitialUrl;
+
+      document.getElementById('btnCopy').onclick = () => {
+        navigator.clipboard.writeText(interstitialUrl);
+        document.getElementById('btnCopy').textContent = '✓ Tersalin!';
+        setTimeout(() => document.getElementById('btnCopy').textContent = 'Salin Tautan', 2000);
+      };
+      document.getElementById('btnGo').onclick = () => window.open(interstitialUrl, '_blank');
+
+      result.className = 'result show';
+    } catch (e) {
+      showError('Gagal menghubungi server. Periksa koneksi anda.');
+    } finally {
+      btnSubmit.disabled = false;
+      btnSubmit.textContent = 'Pendekkan Sekarang';
+    }
+  }
+
+  function showError(msg) {
+    errorMsg.textContent = msg;
+    errorMsg.className = 'error-msg show';
+    btnSubmit.disabled = false;
+    btnSubmit.textContent = 'Pendekkan Sekarang';
+  }
+
+  // Enter key
+  document.getElementById('urlInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleShorten();
+  });
+</script>
+</body>
+</html>
