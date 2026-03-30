@@ -7,10 +7,8 @@
 
   <!-- ═══════════════════════════════════════════════════════════════ -->
   <!-- ADSTERRA SOCIAL BAR — tempel script Social Bar anda di sini   -->
-  <!-- Script ini akan tampil otomatis di semua halaman               -->
-  <!-- ═══════════════════════════════════════════════════════════════ -->
   <!-- <script type="text/javascript" src="//KODE_ADSTERRA.js"></script> -->
-  <!-- AKHIR SOCIAL BAR -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,258 +38,206 @@
       color: var(--text);
       font-family: 'DM Sans', sans-serif;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 0 1rem 3rem;
     }
 
     /* Navbar */
     nav {
-      width: 100%;
       background: var(--white);
       border-bottom: 1px solid var(--border);
       height: 54px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      position: sticky; top: 0; z-index: 50;
     }
     .nav-logo {
       font-family: 'Outfit', sans-serif;
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--accent);
-      text-decoration: none;
+      font-weight: 800; font-size: 1.1rem;
+      color: var(--accent); text-decoration: none;
     }
     .nav-logo span { color: var(--text); }
 
-    .wrap { width: 100%; max-width: 540px; }
-
-    /* ── AD SLOT ATAS (300×250 atau 728×90) ──────────────────────── */
-    .ad-top {
+    /* Step indicator */
+    .step-bar {
       background: var(--white);
-      border: 1.5px dashed var(--border2);
-      border-radius: 12px;
-      min-height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.25rem;
-      overflow: hidden;
-      position: relative;
-      padding: .5rem;
+      border-bottom: 1px solid var(--border);
+      padding: .85rem 1rem;
+      display: flex; align-items: center; justify-content: center; gap: .5rem;
+    }
+    .step-dot {
+      width: 34px; height: 34px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Outfit', sans-serif; font-size: .82rem; font-weight: 700;
+      border: 2px solid var(--border2); color: var(--text3); background: var(--white);
+      transition: all .35s;
+    }
+    .step-dot.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .step-dot.done   { border-color: var(--success); background: var(--success); color: #fff; }
+    .step-line {
+      flex: 1; max-width: 70px; height: 2px;
+      background: var(--border2); border-radius: 2px; transition: background .35s;
+    }
+    .step-line.done { background: var(--success); }
+
+    /* Wrap */
+    .wrap { max-width: 560px; margin: 0 auto; padding: 1.25rem 1rem 4rem; }
+
+    /* ── AD SLOT ATAS ──────────────────────────────────────── */
+    .ad-top {
+      background: var(--white); border: 1.5px dashed var(--border2);
+      border-radius: 12px; min-height: 110px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem; overflow: hidden; position: relative; padding: .5rem;
     }
     .ad-label {
-      position: absolute;
-      top: .35rem; left: .6rem;
-      font-size: .65rem;
-      color: var(--text3);
-      text-transform: uppercase;
-      letter-spacing: .06em;
+      position: absolute; top: .35rem; left: .6rem;
+      font-size: .65rem; color: var(--text3);
+      text-transform: uppercase; letter-spacing: .06em;
     }
-    .ad-ph {
-      text-align: center;
-      color: var(--text3);
-      font-size: .8rem;
-      line-height: 1.6;
-    }
+    .ad-ph { text-align: center; color: var(--text3); font-size: .8rem; line-height: 1.6; }
 
-    /* ── Main card ──────────────────────────────────────────────── */
+    /* ── Main card ─────────────────────────────────────────── */
     .main-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      box-shadow: var(--shadow-md);
-      overflow: hidden;
-      margin-bottom: 1.25rem;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; box-shadow: var(--shadow-md);
+      overflow: hidden; margin-bottom: 1.25rem;
     }
+    .prog-wrap { height: 5px; background: var(--border); }
+    .prog-bar  { height: 100%; background: var(--accent); width: 0%; transition: width 1s linear; }
 
-    /* Progress bar */
-    .progress-bar-wrap {
-      height: 4px;
-      background: var(--border);
-    }
-    .progress-bar {
-      height: 100%;
-      background: var(--accent);
-      width: 0%;
-      transition: width 1s linear;
-    }
-
-    .card-body { padding: 1.75rem 1.5rem; }
+    .card-body { padding: 1.5rem 1.25rem; }
 
     /* Destination */
-    .dest-section {
-      display: flex;
-      align-items: flex-start;
-      gap: .75rem;
-      padding: .85rem 1rem;
-      background: var(--accent-lt);
-      border: 1px solid #BFDBFE;
-      border-radius: 10px;
-      margin-bottom: 1.5rem;
+    .dest-box {
+      display: flex; align-items: flex-start; gap: .65rem;
+      background: var(--accent-lt); border: 1px solid #BFDBFE;
+      border-radius: 10px; padding: .85rem; margin-bottom: 1.25rem;
     }
-    .dest-icon {
-      width: 32px; height: 32px;
-      background: var(--accent);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      color: #fff;
-      font-size: .9rem;
+    .dest-ico {
+      width: 30px; height: 30px; background: var(--accent); border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: .85rem; flex-shrink: 0;
     }
-    .dest-info { flex: 1; overflow: hidden; }
-    .dest-label { font-size: .72rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .2rem; }
-    .dest-url {
-      font-family: 'Outfit', sans-serif;
-      font-size: .88rem;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .dest-lbl { font-size: .7rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .15rem; }
+    .dest-url { font-family: 'Outfit', sans-serif; font-size: .88rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Step title */
+    .step-title {
+      text-align: center; font-family: 'Outfit', sans-serif;
+      font-size: .95rem; font-weight: 700; color: var(--text2); margin-bottom: 1.25rem;
     }
+    .step-title span { color: var(--accent); }
 
     /* Countdown */
-    .countdown-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .75rem;
-      padding: 1.25rem 0 1.5rem;
+    .countdown-box {
+      display: flex; flex-direction: column;
+      align-items: center; gap: .6rem; padding: .75rem 0 1rem;
     }
-    .ring-wrap { position: relative; width: 96px; height: 96px; }
+    .ring-wrap { position: relative; width: 90px; height: 90px; }
     .ring-wrap svg { transform: rotate(-90deg); }
-    .ring-bg   { stroke: var(--border); }
-    .ring-fg   { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset .95s linear; }
+    .ring-bg { stroke: var(--border); }
+    .ring-fg { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset .95s linear; }
     .ring-num {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Outfit', sans-serif;
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--text);
+      font-family: 'Outfit', sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--text);
     }
-    .countdown-label {
-      font-size: .85rem;
-      color: var(--text2);
-      text-align: center;
-      line-height: 1.5;
-    }
+    .cd-label { font-size: .82rem; color: var(--text2); text-align: center; }
 
-    /* Button */
-    #btnGo {
-      width: 100%;
-      padding: .95rem;
-      background: var(--accent);
-      color: #fff;
-      font-family: 'Outfit', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background .15s, transform .1s;
-    }
-    #btnGo:hover:not(:disabled) { background: var(--accent-h); }
-    #btnGo:active:not(:disabled) { transform: scale(.98); }
-    #btnGo:disabled {
-      background: var(--border2);
-      color: var(--text3);
-      cursor: not-allowed;
-    }
-
-    /* ── AD SLOT TENGAH (300×250) ────────────────────────────────── */
+    /* ── AD SLOT TENGAH 300×250 ────────────────────────────── */
     .ad-mid {
-      background: var(--white);
-      border: 1.5px dashed var(--border2);
-      border-radius: 12px;
-      min-height: 260px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1.25rem;
-      overflow: hidden;
-      position: relative;
+      background: var(--bg); border: 1.5px dashed var(--border2);
+      border-radius: 12px; min-height: 275px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 1.25rem 0; overflow: hidden; position: relative;
     }
 
-    /* ── AD SLOT BAWAH (320×50) ──────────────────────────────────── */
+    /* ── AD SLOT EKSTRA 320×100 ────────────────────────────── */
+    .ad-extra {
+      background: var(--bg); border: 1.5px dashed var(--border2);
+      border-radius: 10px; min-height: 115px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem; overflow: hidden; position: relative;
+    }
+
+    /* Scroll hint */
+    .scroll-hint-wrap {
+      display: flex; align-items: center; justify-content: center;
+      padding: .85rem 0 1rem;
+    }
+    .scroll-hint {
+      font-size: .78rem; color: var(--text3);
+      display: flex; align-items: center; gap: .35rem;
+      animation: bounce 1.4s ease-in-out infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+
+    /* ── Tombol utama — besar & di paling bawah ────────────── */
+    .btn-next {
+      display: block; width: 100%;
+      padding: 1.15rem 1rem 1.25rem;
+      background: var(--accent); color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem; font-weight: 800;
+      border: none; border-radius: 14px; cursor: pointer;
+      box-shadow: 0 5px 18px rgba(37,99,235,.35);
+      transition: background .15s, transform .1s, box-shadow .15s;
+      text-align: center; letter-spacing: .01em;
+    }
+    .btn-next:hover:not(:disabled) { background: var(--accent-h); box-shadow: 0 7px 22px rgba(37,99,235,.4); }
+    .btn-next:active:not(:disabled) { transform: scale(.98); }
+    .btn-next:disabled { background: var(--border2); color: var(--text3); cursor: not-allowed; box-shadow: none; }
+    .btn-sub { text-align: center; font-size: .75rem; color: var(--text3); margin-top: .65rem; }
+
+    /* ── AD BAWAH 320×50 ───────────────────────────────────── */
     .ad-bot {
-      background: var(--white);
-      border: 1.5px dashed var(--border2);
-      border-radius: 10px;
-      min-height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 1rem;
-      overflow: hidden;
+      background: var(--white); border: 1.5px dashed var(--border2);
+      border-radius: 10px; min-height: 65px;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1.25rem; overflow: hidden;
     }
 
     /* Loading & Error */
     .state-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      margin-bottom: 1.25rem;
-      box-shadow: var(--shadow);
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2.5rem 1.5rem;
+      text-align: center; box-shadow: var(--shadow); margin-bottom: 1.25rem;
     }
     .spinner {
       width: 36px; height: 36px;
-      border: 3px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-      margin: 0 auto 1rem;
+      border: 3px solid var(--border); border-top-color: var(--accent);
+      border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 1rem;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .state-icon { font-size: 2rem; margin-bottom: .75rem; }
-    .state-msg  { color: var(--text2); font-size: .95rem; margin-bottom: 1rem; }
+    .state-msg { color: var(--text2); font-size: .95rem; margin-bottom: 1rem; }
     .btn-back {
-      display: inline-block;
-      padding: .6rem 1.25rem;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 9px;
-      font-size: .88rem;
-      font-weight: 600;
-      text-decoration: none;
+      display: inline-block; padding: .6rem 1.25rem;
+      background: var(--accent); color: #fff; border-radius: 9px;
+      font-size: .88rem; font-weight: 600; text-decoration: none;
       font-family: 'Outfit', sans-serif;
     }
-
-    footer {
-      text-align: center;
-      font-size: .78rem;
-      color: var(--text3);
-      margin-top: .5rem;
-    }
+    footer { text-align: center; font-size: .78rem; color: var(--text3); margin-top: 1rem; }
     footer a { color: var(--accent); text-decoration: none; }
+
+    @keyframes fadeSlide {
+      from { opacity:0; transform:translateX(16px); }
+      to   { opacity:1; transform:none; }
+    }
+    .step-anim { animation: fadeSlide .3s ease; }
   </style>
 </head>
 <body>
 
 <nav><a class="nav-logo" href="index.html">⚡ Short<span>Link</span></a></nav>
 
-<div class="wrap">
+<!-- Step indicator -->
+<div class="step-bar">
+  <div class="step-dot active" id="dot1">1</div>
+  <div class="step-line" id="line1"></div>
+  <div class="step-dot" id="dot2">2</div>
+  <div class="step-line" id="line2"></div>
+  <div class="step-dot" id="dot3">3</div>
+</div>
 
-  <!-- ═══════════════════════════════════════════════════════════════ -->
-  <!-- ADSTERRA AD SLOT ATAS — Banner 728×90 atau 320×50              -->
-  <!-- Tempel kode banner Adsterra anda di dalam div .ad-inner        -->
-  <!-- ═══════════════════════════════════════════════════════════════ -->
-  <div class="ad-top">
-    <span class="ad-label">Iklan</span>
-    <div class="ad-ph" id="adTopInner">
-      <!-- TEMPEL KODE ADSTERRA BANNER DI SINI -->
-      [ Slot Iklan Atas — 728×90 / 320×50 ]<br>
-      <span style="font-size:.72rem">Daftarkan akun Adsterra untuk mengaktifkan</span>
-      <!-- AKHIR KODE -->
-    </div>
-  </div>
-  <!-- ════════════════════════════════════════════════════════════════ -->
+<div class="wrap">
 
   <!-- Loading -->
   <div class="state-card" id="stateLoading">
@@ -301,133 +247,224 @@
 
   <!-- Error -->
   <div class="state-card" id="stateError" style="display:none">
-    <div class="state-icon">🔗</div>
-    <div class="state-msg" id="errMsg">Tautan tidak ditemukan atau sudah kedaluwarsa.</div>
+    <div style="font-size:2rem;margin-bottom:.75rem">🔗</div>
+    <div class="state-msg" id="errMsg">Tautan tidak ditemukan.</div>
     <a href="index.html" class="btn-back">← Buat Tautan Baru</a>
   </div>
 
-  <!-- Main (tampil setelah fetch berhasil) -->
+  <!-- Main -->
   <div id="stateMain" style="display:none">
-    <div class="main-card">
-      <div class="progress-bar-wrap">
-        <div class="progress-bar" id="progressBar"></div>
+
+    <!-- AD ATAS -->
+    <div class="ad-top">
+      <span class="ad-label">Iklan</span>
+      <div class="ad-ph">
+        <!-- TEMPEL KODE ADSTERRA BANNER 728×90 / 320×50 DI SINI -->
+        [ Slot Iklan Atas — 728×90 / 320×50 ]
+        <!-- AKHIR KODE -->
       </div>
+    </div>
+
+    <!-- Card utama -->
+    <div class="main-card" id="mainCard">
+      <div class="prog-wrap"><div class="prog-bar" id="progBar"></div></div>
       <div class="card-body">
 
         <!-- Tujuan -->
-        <div class="dest-section">
-          <div class="dest-icon">🔗</div>
-          <div class="dest-info">
-            <div class="dest-label">Anda akan diarahkan ke</div>
+        <div class="dest-box">
+          <div class="dest-ico">🔗</div>
+          <div style="overflow:hidden">
+            <div class="dest-lbl">Tujuan akhir</div>
             <div class="dest-url" id="destUrl"></div>
           </div>
         </div>
 
+        <!-- Judul langkah -->
+        <div class="step-title" id="stepTitle">Langkah <span>1</span> dari 3 — Harap tunggu</div>
+
         <!-- Countdown -->
-        <div class="countdown-section">
+        <div class="countdown-box">
           <div class="ring-wrap">
-            <svg width="96" height="96" viewBox="0 0 96 96">
-              <circle class="ring-bg" cx="48" cy="48" r="40" fill="none" stroke-width="7"/>
-              <circle class="ring-fg" id="ringFg" cx="48" cy="48" r="40" fill="none" stroke-width="7"
-                stroke-dasharray="251.3" stroke-dashoffset="0"/>
+            <svg width="90" height="90" viewBox="0 0 90 90">
+              <circle class="ring-bg" cx="45" cy="45" r="37" fill="none" stroke-width="7"/>
+              <circle class="ring-fg" id="ringFg" cx="45" cy="45" r="37" fill="none" stroke-width="7"
+                stroke-dasharray="232.5" stroke-dashoffset="0"/>
             </svg>
-            <div class="ring-num" id="ringNum">10</div>
+            <div class="ring-num" id="ringNum">15</div>
           </div>
-          <div class="countdown-label">
-            Mohon tunggu <strong id="secLabel">10</strong> detik<br>
-            <span style="font-size:.8rem;color:var(--text3)">Halaman akan redirect otomatis setelah tombol ditekan</span>
-          </div>
+          <div class="cd-label">detik tersisa di langkah ini</div>
         </div>
 
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <!-- ADSTERRA AD SLOT TENGAH — 300×250 (paling menghasilkan)-->
-        <!-- Tempel kode display banner 300×250 Adsterra di sini    -->
-        <!-- ═══════════════════════════════════════════════════════ -->
-        <div class="ad-mid" style="margin-bottom:1.5rem">
+        <!-- AD TENGAH 300×250 -->
+        <div class="ad-mid">
           <span class="ad-label" style="position:absolute;top:.35rem;left:.6rem;font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Iklan</span>
           <div class="ad-ph">
             <!-- TEMPEL KODE ADSTERRA 300×250 DI SINI -->
             [ Slot Iklan — 300×250 ]<br>
-            <span style="font-size:.72rem">Format paling optimal untuk pendapatan iklan</span>
+            <span style="font-size:.72rem">Format paling optimal untuk pendapatan</span>
             <!-- AKHIR KODE -->
           </div>
         </div>
-        <!-- ═══════════════════════════════════════════════════════ -->
 
-        <button type="button" id="btnGo" disabled>
-          Menghitung… (<span id="btnSec">10</span>)
+        <!-- AD EKSTRA 320×100 -->
+        <div class="ad-extra">
+          <span class="ad-label" style="position:absolute;top:.35rem;left:.6rem;font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Iklan</span>
+          <div class="ad-ph">
+            <!-- TEMPEL KODE ADSTERRA 320×100 DI SINI -->
+            [ Slot Iklan — 320×100 ]
+            <!-- AKHIR KODE -->
+          </div>
+        </div>
+
+        <!-- Scroll hint (sembunyikan saat tombol aktif) -->
+        <div class="scroll-hint-wrap" id="scrollHintWrap">
+          <div class="scroll-hint">↓ Scroll ke bawah untuk tombol lanjut</div>
+        </div>
+
+        <!-- TOMBOL — paling bawah -->
+        <button type="button" class="btn-next" id="btnNext" disabled>
+          Menghitung… (<span id="btnSec">15</span>)
         </button>
+        <div class="btn-sub" id="btnSub">Harap tunggu hingga countdown selesai</div>
 
       </div>
     </div>
-  </div>
 
-  <!-- ════════════════════════════════════════════════════════════════ -->
-  <!-- ADSTERRA AD SLOT BAWAH — Banner 320×50                         -->
-  <!-- ════════════════════════════════════════════════════════════════ -->
-  <div class="ad-bot">
-    <div class="ad-ph">
-      <!-- TEMPEL KODE ADSTERRA 320×50 DI SINI -->
-      [ Slot Iklan Bawah — 320×50 ]
-      <!-- AKHIR KODE -->
+    <!-- AD BAWAH -->
+    <div class="ad-bot">
+      <div class="ad-ph">
+        <!-- TEMPEL KODE ADSTERRA 320×50 DI SINI -->
+        [ Slot Iklan Bawah — 320×50 ]
+        <!-- AKHIR KODE -->
+      </div>
     </div>
-  </div>
-  <!-- ════════════════════════════════════════════════════════════════ -->
 
-  <footer>
-    Layanan pemendek URL oleh <a href="index.html">ShortLink</a>
-  </footer>
+    <footer>
+      Layanan pemendek URL oleh <a href="index.html">ShortLink</a>
+    </footer>
+
+  </div>
 
 </div>
 
 <script>
   // ══════════════════════════════════════════════
   const WORKER_URL     = 'https://shortlink-api.revpeak2.workers.dev';
-  const COUNTDOWN_SECS = 10;
+  const COUNTDOWN_SECS = 15;
+  const TOTAL_STEPS    = 3;
   // ══════════════════════════════════════════════
 
-  const code = new URLSearchParams(location.search).get('c');
-  const CIRCUMFERENCE = 2 * Math.PI * 40; // ~251.3
+  const CIRCUMFERENCE = 2 * Math.PI * 37; // ~232.5
+
+  const code      = new URLSearchParams(location.search).get('c');
+  let targetUrl   = '';
+  let timerHandle = null;
+
+  // Elemen
+  const elLoading       = document.getElementById('stateLoading');
+  const elError         = document.getElementById('stateError');
+  const elMain          = document.getElementById('stateMain');
+  const mainCard        = document.getElementById('mainCard');
+  const ringFg          = document.getElementById('ringFg');
+  const ringNum         = document.getElementById('ringNum');
+  const progBar         = document.getElementById('progBar');
+  const btnNext         = document.getElementById('btnNext');
+  const btnSec          = document.getElementById('btnSec');
+  const btnSub          = document.getElementById('btnSub');
+  const stepTitle       = document.getElementById('stepTitle');
+  const scrollHintWrap  = document.getElementById('scrollHintWrap');
+  const dots  = [null, document.getElementById('dot1'), document.getElementById('dot2'), document.getElementById('dot3')];
+  const lines = [null, document.getElementById('line1'), document.getElementById('line2')];
 
   function showError(msg) {
-    document.getElementById('stateLoading').style.display = 'none';
+    elLoading.style.display = 'none';
     if (msg) document.getElementById('errMsg').textContent = msg;
-    document.getElementById('stateError').style.display = 'block';
+    elError.style.display = 'block';
   }
 
-  function startCountdown(targetUrl) {
-    document.getElementById('stateLoading').style.display = 'none';
-    document.getElementById('stateMain').style.display    = 'block';
+  function updateDots(step) {
+    for (let i = 1; i <= TOTAL_STEPS; i++) {
+      dots[i].className = 'step-dot' + (i < step ? ' done' : i === step ? ' active' : '');
+    }
+    for (let i = 1; i < TOTAL_STEPS; i++) {
+      lines[i].className = 'step-line' + (i < step ? ' done' : '');
+    }
+  }
+
+  function runStep(step) {
+    updateDots(step);
+
+    const isLast = (step === TOTAL_STEPS);
+
+    // Judul
+    stepTitle.innerHTML = `Langkah <span>${step}</span> dari ${TOTAL_STEPS} — ${isLast ? '🎯 Langkah terakhir!' : 'Harap tunggu'}`;
+
+    // Reset countdown visual
+    ringFg.style.transition  = 'none';
+    progBar.style.transition = 'none';
+    ringFg.style.strokeDashoffset = 0;
+    progBar.style.width = '0%';
+    void ringFg.getBoundingClientRect(); // reflow
+    ringFg.style.transition  = 'stroke-dashoffset .95s linear';
+    progBar.style.transition = 'width 1s linear';
+
+    // Animasi card
+    mainCard.classList.remove('step-anim');
+    void mainCard.offsetHeight;
+    mainCard.classList.add('step-anim');
+
+    // Scroll ke atas
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // State tombol
+    btnNext.disabled = true;
+    btnNext.textContent = `Menghitung… (15)`;
+    btnSec.textContent  = 15;
+    btnNext.onclick     = null;
+    scrollHintWrap.style.display = 'flex';
+    btnSub.textContent  = 'Harap tunggu hingga countdown selesai';
 
     let sec = COUNTDOWN_SECS;
-    const ringFg      = document.getElementById('ringFg');
-    const ringNum     = document.getElementById('ringNum');
-    const secLabel    = document.getElementById('secLabel');
-    const btnSec      = document.getElementById('btnSec');
-    const progressBar = document.getElementById('progressBar');
-    const btnGo       = document.getElementById('btnGo');
 
-    const tick = () => {
+    if (timerHandle) clearInterval(timerHandle);
+
+    timerHandle = setInterval(() => {
       sec--;
-      ringNum.textContent  = sec;
-      secLabel.textContent = sec;
-      btnSec.textContent   = sec;
 
-      const progress = (COUNTDOWN_SECS - sec) / COUNTDOWN_SECS;
-      ringFg.style.strokeDashoffset = CIRCUMFERENCE * progress;
-      progressBar.style.width       = (progress * 100) + '%';
+      ringNum.textContent = sec;
+      btnNext.textContent = `Menghitung… (${sec})`;
+
+      const ratio = (COUNTDOWN_SECS - sec) / COUNTDOWN_SECS;
+      ringFg.style.strokeDashoffset = CIRCUMFERENCE * ratio;
+      progBar.style.width = (ratio * 100) + '%';
 
       if (sec <= 0) {
-        btnGo.disabled    = false;
-        btnGo.textContent = 'Lanjutkan ke Tujuan →';
-        btnGo.onclick     = () => { window.location.href = targetUrl; };
-        progressBar.style.width = '100%';
-        return;
-      }
-      setTimeout(tick, 1000);
-    };
+        clearInterval(timerHandle);
 
-    setTimeout(tick, 1000);
+        // Aktifkan tombol
+        btnNext.disabled = false;
+        scrollHintWrap.style.display = 'none';
+
+        if (isLast) {
+          btnNext.textContent = '🎉 Klik untuk Mendapatkan URL Tujuan';
+          btnSub.textContent  = 'Anda akan langsung diarahkan ke halaman tujuan';
+          btnNext.onclick = () => { window.location.href = targetUrl; };
+        } else {
+          btnNext.textContent = `Lanjut ke Langkah ${step + 1} dari ${TOTAL_STEPS} →`;
+          btnSub.textContent  = `Masih ${TOTAL_STEPS - step} langkah lagi`;
+          btnNext.onclick = () => {
+            btnNext.disabled    = true;
+            btnNext.textContent = 'Memuat langkah berikutnya…';
+            runStep(step + 1);
+          };
+        }
+
+        // Scroll ke tombol supaya mudah ditemukan
+        setTimeout(() => {
+          btnNext.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 400);
+      }
+    }, 1000);
   }
 
   async function init() {
@@ -437,10 +474,16 @@
       const data = await res.json();
       if (!res.ok || !data.original_url) return showError(data.error || 'Tautan tidak ditemukan.');
 
-      const u = new URL(data.original_url);
-      const display = u.origin + (u.pathname.length > 35 ? u.pathname.slice(0, 35) + '…' : u.pathname);
-      document.getElementById('destUrl').textContent = display;
-      startCountdown(data.original_url);
+      targetUrl = data.original_url;
+
+      const u = new URL(targetUrl);
+      document.getElementById('destUrl').textContent =
+        u.origin + (u.pathname.length > 32 ? u.pathname.slice(0, 32) + '…' : u.pathname);
+
+      elLoading.style.display = 'none';
+      elMain.style.display    = 'block';
+
+      runStep(1);
     } catch {
       showError('Gagal memuat tautan. Periksa koneksi internet anda.');
     }
