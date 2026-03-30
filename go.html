@@ -93,9 +93,10 @@
       background: var(--white);
       border: 1.5px dashed var(--border2);
       border-radius: 10px;
-      min-height: 60px;
+      width: 320px; height: 50px;
+      max-width: 100%;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1.25rem;
+      margin: 0 auto 1.25rem;
       overflow: hidden; position: relative;
     }
     .ad-label {
@@ -153,6 +154,31 @@
     .cd-label { font-size: .82rem; color: var(--text2); text-align: center; }
 
     /* ═══════════════════════════════════════════════════════════
+       SLOT NATIVE BANNER
+       ═══════════════════════════════════════════════════════════ */
+    .ad-native {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: .5rem;
+      margin: 1.25rem 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .ad-native-label {
+      display: block;
+      font-size: .62rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: .25rem;
+      padding-left: .25rem;
+    }
+    /* Paksa konten native banner sesuai desain halaman */
+    .ad-native iframe,
+    .ad-native > div { width: 100% !important; }
+
+    /* ═══════════════════════════════════════════════════════════
        SLOT 4: BANNER 300×250 — di tengah card, saat countdown
        Format terbaik untuk pendapatan Adsterra
        ═══════════════════════════════════════════════════════════ */
@@ -160,11 +186,12 @@
       background: var(--bg);
       border: 1.5px dashed var(--border2);
       border-radius: 12px;
-      min-height: 260px;
-      width: 300px;
-      margin: 1.25rem auto 1.25rem;
+      width: 300px; height: 250px;
+      max-width: 100%;
+      margin: 1.25rem auto;
       display: flex; align-items: center; justify-content: center;
       overflow: hidden; position: relative;
+      flex-shrink: 0;
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -174,9 +201,10 @@
       background: var(--bg);
       border: 1.5px dashed var(--border2);
       border-radius: 10px;
-      min-height: 60px;
+      width: 320px; height: 50px;
+      max-width: 100%;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1.5rem;
+      margin: 0 auto 1.5rem;
       overflow: hidden; position: relative;
     }
 
@@ -214,9 +242,11 @@
        ═══════════════════════════════════════════════════════════ */
     .ad-bot {
       background: var(--white); border: 1.5px dashed var(--border2);
-      border-radius: 10px; min-height: 60px;
+      border-radius: 10px;
+      width: 320px; height: 50px;
+      max-width: 100%;
       display: flex; align-items: center; justify-content: center;
-      margin-top: 1.25rem; overflow: hidden;
+      margin: 1.25rem auto 0; overflow: hidden;
     }
 
     /* Loading & Error */
@@ -329,6 +359,15 @@
             <div class="ring-num" id="ringNum">15</div>
           </div>
           <div class="cd-label">detik tersisa di langkah ini</div>
+        </div>
+
+        <!-- ══════════════════════════════════════════════════════
+             SLOT NATIVE BANNER — di antara countdown & 300×250
+             ══════════════════════════════════════════════════════ -->
+        <div class="ad-native">
+          <span class="ad-native-label">Iklan</span>
+          <script async="async" data-cfasync="false" src="https://pl29021414.profitablecpmratenetwork.com/8d0ca40762463f1417e3524c515f0b9f/invoke.js"></script>
+          <div id="container-8d0ca40762463f1417e3524c515f0b9f"></div>
         </div>
 
         <!-- ══════════════════════════════════════════════════════
