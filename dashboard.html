@@ -3,463 +3,406 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard — Shortlink</title>
+  <title>Statistik — ShortLink</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #080C14;
-      --surface:  #0F1623;
-      --surface2: #162030;
-      --border:   #1E2D42;
-      --accent:   #38BDF8;
-      --success:  #34D399;
-      --error:    #F87171;
-      --warning:  #FBBF24;
-      --text:     #E2E8F0;
-      --muted:    #64748B;
+      --bg:        #F4F6FB;
+      --white:     #FFFFFF;
+      --border:    #E2E8F0;
+      --border2:   #CBD5E1;
+      --accent:    #2563EB;
+      --accent-h:  #1D4ED8;
+      --accent-lt: #EFF6FF;
+      --success:   #059669;
+      --success-lt:#ECFDF5;
+      --error:     #DC2626;
+      --error-lt:  #FEF2F2;
+      --warning:   #D97706;
+      --text:      #0F172A;
+      --text2:     #475569;
+      --text3:     #94A3B8;
+      --shadow:    0 1px 3px rgba(0,0,0,.07);
+      --shadow-md: 0 4px 16px rgba(0,0,0,.09);
     }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      min-height: 100vh;
-      padding: 0 1rem 4rem;
-    }
+    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(56,189,248,.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56,189,248,.03) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
-
-    /* Header */
-    header {
+    /* Navbar */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.5rem 0 1.25rem;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 1.75rem;
-      flex-wrap: wrap;
-      gap: .75rem;
+      position: sticky; top: 0; z-index: 50;
     }
-    .logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .9rem;
-      color: var(--accent);
-      letter-spacing: .1em;
-      text-decoration: none;
-    }
-    .page-title { font-size: 1.3rem; font-weight: 700; }
+    .nav-logo { font-family:'Outfit',sans-serif; font-weight:800; font-size:1.2rem; color:var(--accent); text-decoration:none; }
+    .nav-logo span { color:var(--text); }
+    .nav-right { display:flex; gap:.5rem; align-items:center; }
+    .nav-right a { font-size:.85rem; font-weight:500; color:var(--text2); text-decoration:none; padding:.4rem .8rem; border-radius:8px; transition:background .15s; }
+    .nav-right a:hover { background:var(--bg); }
+    .nav-right a.active { background:var(--accent-lt); color:var(--accent); font-weight:600; }
+
+    /* Layout */
+    .page { max-width: 960px; margin: 0 auto; padding: 1.75rem 1.25rem 4rem; }
+
+    .page-header { margin-bottom: 1.5rem; }
+    .page-header h1 { font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:800; margin-bottom:.25rem; }
+    .page-header p { color:var(--text2); font-size:.9rem; }
 
     /* Login overlay */
     #loginOverlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(8,12,20,.95);
+      position: fixed; inset: 0;
+      background: rgba(244,246,251,.97);
       z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
     }
-    .login-card {
-      background: var(--surface);
+    .login-box {
+      background: var(--white);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      width: 100%;
-      max-width: 380px;
+      border-radius: 18px;
+      padding: 2rem 1.75rem;
+      width: 100%; max-width: 360px;
       text-align: center;
+      box-shadow: var(--shadow-md);
     }
-    .login-card h2 { font-size: 1.2rem; margin-bottom: .5rem; }
-    .login-card p { color: var(--muted); font-size: .9rem; margin-bottom: 1.5rem; }
-    .login-card input {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: .85rem 1rem;
-      color: var(--text);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .9rem;
-      outline: none;
-      margin-bottom: .75rem;
+    .login-box .icon { font-size: 2rem; margin-bottom: .75rem; }
+    .login-box h2 { font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:700; margin-bottom:.4rem; }
+    .login-box p { color:var(--text2); font-size:.88rem; margin-bottom:1.25rem; }
+    .login-box input {
+      width:100%; border:1.5px solid var(--border2); border-radius:10px;
+      padding:.8rem 1rem; font-family:'DM Sans',sans-serif; font-size:.95rem;
+      outline:none; margin-bottom:.75rem; transition:border-color .2s;
     }
-    .login-card input:focus { border-color: var(--accent); }
-    .login-card button {
-      width: 100%;
-      padding: .85rem;
-      background: var(--accent);
-      color: #080C14;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 700;
-      font-size: .95rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
+    .login-box input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(37,99,235,.1); }
+    .login-box button {
+      width:100%; padding:.85rem; background:var(--accent); color:#fff;
+      font-family:'Outfit',sans-serif; font-weight:700; font-size:.95rem;
+      border:none; border-radius:10px; cursor:pointer;
     }
-    .login-error {
-      color: var(--error);
-      font-size: .85rem;
-      margin-top: .5rem;
-      display: none;
-    }
+    .login-box button:hover { background:var(--accent-h); }
+    .login-err { color:var(--error); font-size:.82rem; margin-top:.5rem; display:none; }
 
-    /* Stats bar */
-    .stats-bar {
+    /* Stats grid */
+    .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 1rem;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
     }
     .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.1rem 1.25rem;
-    }
-    .stat-label { font-size: .75rem; color: var(--muted); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-bottom: .4rem; }
-    .stat-val   { font-family: 'JetBrains Mono', monospace; font-size: 1.6rem; font-weight: 600; color: #fff; }
-    .stat-val.accent  { color: var(--accent); }
-    .stat-val.success { color: var(--success); }
-
-    /* Controls */
-    .controls {
-      display: flex;
-      gap: .75rem;
-      margin-bottom: 1.25rem;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-    .search-input {
-      flex: 1;
-      min-width: 180px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      padding: .65rem .9rem;
-      color: var(--text);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: .9rem;
-      outline: none;
-    }
-    .search-input:focus { border-color: var(--accent); }
-    .search-input::placeholder { color: var(--muted); }
-    .btn-refresh {
-      padding: .65rem 1rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      color: var(--text);
-      font-size: .9rem;
-      cursor: pointer;
-      transition: border-color .2s;
-      white-space: nowrap;
-    }
-    .btn-refresh:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* Table */
-    .table-wrap {
-      background: var(--surface);
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: 14px;
-      overflow: hidden;
+      padding: 1.25rem;
+      box-shadow: var(--shadow);
     }
-    table { width: 100%; border-collapse: collapse; }
-    thead tr { border-bottom: 1px solid var(--border); }
-    th {
-      text-align: left;
-      padding: .85rem 1rem;
-      font-size: .75rem;
-      font-weight: 600;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-      color: var(--muted);
+    .stat-card .sc-icon {
+      width:36px; height:36px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; margin-bottom:.75rem;
     }
-    tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: var(--surface2); }
-    td { padding: .9rem 1rem; font-size: .9rem; vertical-align: middle; }
+    .sc-blue  { background:var(--accent-lt); }
+    .sc-green { background:var(--success-lt); }
+    .sc-yellow{ background:#FFFBEB; }
+    .sc-purple{ background:#F5F3FF; }
+    .stat-card .sc-val {
+      font-family:'Outfit',sans-serif; font-size:1.75rem; font-weight:800;
+      color:var(--text); line-height:1;
+    }
+    .stat-card .sc-label { font-size:.78rem; color:var(--text2); margin-top:.35rem; font-weight:500; }
 
-    .code-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .82rem;
-      background: var(--surface2);
+    /* Table card */
+    .table-card {
+      background: var(--white);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: .25rem .5rem;
-      color: var(--accent);
-      white-space: nowrap;
-    }
-    .dest-cell {
-      max-width: 260px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
       overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: var(--muted);
-      font-size: .85rem;
     }
-    .clicks-badge {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 600;
-      color: var(--success);
+    .table-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .75rem;
     }
-    .date-cell { color: var(--muted); font-size: .82rem; white-space: nowrap; }
+    .table-header h2 { font-family:'Outfit',sans-serif; font-size:1rem; font-weight:700; }
+    .search-wrap { position:relative; }
+    .search-wrap input {
+      background: var(--bg);
+      border: 1px solid var(--border2);
+      border-radius: 9px;
+      padding: .55rem .9rem .55rem 2.2rem;
+      font-size:.85rem; font-family:'DM Sans',sans-serif;
+      color:var(--text); outline:none;
+      width: 200px;
+      transition: border-color .2s;
+    }
+    .search-wrap input:focus { border-color:var(--accent); }
+    .search-wrap input::placeholder { color:var(--text3); }
+    .search-wrap svg { position:absolute; left:.7rem; top:50%; transform:translateY(-50%); color:var(--text3); width:15px; height:15px; pointer-events:none; }
 
-    /* Action buttons */
-    .btn-copy-row, .btn-del {
-      padding: .35rem .7rem;
-      border-radius: 6px;
-      font-size: .8rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: opacity .2s;
-    }
-    .btn-copy-row { background: rgba(56,189,248,.12); color: var(--accent); margin-right: .35rem; }
-    .btn-del      { background: rgba(248,113,113,.12); color: var(--error); }
-    .btn-copy-row:hover, .btn-del:hover { opacity: .75; }
+    table { width:100%; border-collapse:collapse; }
+    thead tr { background:var(--bg); }
+    th { text-align:left; padding:.75rem 1rem; font-size:.75rem; font-weight:600; color:var(--text2); letter-spacing:.05em; text-transform:uppercase; border-bottom:1px solid var(--border); }
+    tbody tr { border-bottom:1px solid var(--border); transition:background .12s; }
+    tbody tr:last-child { border:none; }
+    tbody tr:hover { background:#FAFBFC; }
+    td { padding:.85rem 1rem; font-size:.88rem; vertical-align:middle; }
 
-    /* Empty */
-    .empty {
-      text-align: center;
-      padding: 3rem 1rem;
-      color: var(--muted);
+    .code-tag {
+      display:inline-block;
+      background:var(--accent-lt);
+      color:var(--accent);
+      border:1px solid #BFDBFE;
+      border-radius:6px;
+      padding:.2rem .55rem;
+      font-family:'Outfit',monospace;
+      font-size:.82rem;
+      font-weight:600;
+      white-space:nowrap;
     }
-    .empty p:first-child { font-size: 2rem; margin-bottom: .5rem; }
+    .url-cell {
+      max-width: 240px;
+      overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+      color:var(--text2); font-size:.83rem;
+    }
+    .click-badge {
+      font-family:'Outfit',sans-serif;
+      font-weight:700;
+      color:var(--success);
+      font-size:.95rem;
+    }
+    .date-cell { color:var(--text3); font-size:.8rem; white-space:nowrap; }
 
-    /* Loading */
-    .loading-row td { text-align: center; padding: 2.5rem; color: var(--muted); }
+    .action-btn {
+      padding:.3rem .65rem;
+      border-radius:6px;
+      font-size:.78rem;
+      font-weight:600;
+      cursor:pointer;
+      border:none;
+      transition:opacity .15s, transform .1s;
+      font-family:'DM Sans',sans-serif;
+    }
+    .action-btn:active { transform:scale(.94); }
+    .btn-cp { background:var(--accent-lt); color:var(--accent); margin-right:.3rem; }
+    .btn-dl { background:var(--error-lt); color:var(--error); }
+    .btn-cp:hover, .btn-dl:hover { opacity:.8; }
+
+    /* Empty / loading */
+    .tbl-state { text-align:center; padding:3rem 1rem; color:var(--text2); }
+    .tbl-icon { font-size:2rem; margin-bottom:.5rem; }
     .spinner {
-      width: 28px; height: 28px;
-      border: 3px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin .7s linear infinite;
-      margin: 0 auto .75rem;
+      width:30px; height:30px;
+      border:3px solid var(--border);
+      border-top-color:var(--accent);
+      border-radius:50%;
+      animation:spin .7s linear infinite;
+      margin:0 auto .75rem;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes spin { to { transform:rotate(360deg); } }
 
-    /* Mobile: hide some columns */
-    @media (max-width: 600px) {
-      .col-dest, .col-date, .col-title { display: none; }
+    @media(max-width:600px) {
+      .col-url, .col-date, .col-title { display:none; }
     }
-
-    footer { text-align: center; margin-top: 2rem; color: var(--muted); font-size: .8rem; }
-    footer a { color: var(--accent); text-decoration: none; }
   </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <a class="logo" href="index.html">⚡ shortlink</a>
-    <div class="page-title">📊 Dashboard</div>
-    <a href="index.html" style="font-size:.85rem;color:var(--muted);text-decoration:none">+ Buat Tautan</a>
-  </header>
 
-  <!-- Stats -->
-  <div class="stats-bar">
-    <div class="stat-card">
-      <div class="stat-label">Total Tautan</div>
-      <div class="stat-val accent" id="statLinks">—</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Total Klik</div>
-      <div class="stat-val success" id="statClicks">—</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Rata-rata Klik</div>
-      <div class="stat-val" id="statAvg">—</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Paling Populer</div>
-      <div class="stat-val" id="statTop" style="font-size:.95rem;color:var(--warning)">—</div>
-    </div>
+<!-- Navbar -->
+<nav>
+  <a class="nav-logo" href="index.html">⚡ Short<span>Link</span></a>
+  <div class="nav-right">
+    <a href="index.html">Beranda</a>
+    <a href="dashboard.html" class="active">Statistik</a>
+    <a href="admin.html">Admin</a>
+  </div>
+</nav>
+
+<!-- Login overlay -->
+<div id="loginOverlay">
+  <div class="login-box">
+    <div class="icon">📊</div>
+    <h2>Masuk ke Statistik</h2>
+    <p>Masukkan Admin Key untuk melihat data tautan.</p>
+    <input type="password" id="keyInput" placeholder="Admin Key" />
+    <button type="button" onclick="doLogin()">Masuk</button>
+    <div class="login-err" id="loginErr">Kunci salah, coba lagi.</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="page-header">
+    <h1>Statistik Tautan</h1>
+    <p>Pantau performa semua tautan pendek anda.</p>
   </div>
 
-  <!-- Controls -->
-  <div class="controls">
-    <input type="text" class="search-input" id="searchInput" placeholder="🔍 Cari kode atau URL…" oninput="filterTable()" />
-    <button type="button" class="btn-refresh" onclick="loadLinks()">↻ Muat Ulang</button>
+  <!-- Stats -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="sc-icon sc-blue">🔗</div>
+      <div class="sc-val" id="svLinks">—</div>
+      <div class="sc-label">Total Tautan</div>
+    </div>
+    <div class="stat-card">
+      <div class="sc-icon sc-green">👆</div>
+      <div class="sc-val" id="svClicks">—</div>
+      <div class="sc-label">Total Klik</div>
+    </div>
+    <div class="stat-card">
+      <div class="sc-icon sc-yellow">📈</div>
+      <div class="sc-val" id="svAvg">—</div>
+      <div class="sc-label">Rata-rata Klik</div>
+    </div>
+    <div class="stat-card">
+      <div class="sc-icon sc-purple">🏆</div>
+      <div class="sc-val" id="svTop" style="font-size:1.1rem">—</div>
+      <div class="sc-label">Tautan Terpopuler</div>
+    </div>
   </div>
 
   <!-- Table -->
-  <div class="table-wrap">
-    <table id="linksTable">
+  <div class="table-card">
+    <div class="table-header">
+      <h2>Semua Tautan</h2>
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Cari tautan…" oninput="filterTable(this.value)" />
+      </div>
+    </div>
+    <table>
       <thead>
         <tr>
           <th>Kode</th>
           <th class="col-title">Judul</th>
-          <th class="col-dest">URL Tujuan</th>
+          <th class="col-url">URL Tujuan</th>
           <th>Klik</th>
           <th class="col-date">Dibuat</th>
           <th>Aksi</th>
         </tr>
       </thead>
-      <tbody id="tableBody">
-        <tr class="loading-row"><td colspan="6"><div class="spinner"></div><p>Memuat…</p></td></tr>
+      <tbody id="tBody">
+        <tr><td colspan="6"><div class="tbl-state"><div class="spinner"></div><p>Memuat…</p></div></td></tr>
       </tbody>
     </table>
-  </div>
-
-  <footer>
-    <a href="index.html">← Kembali ke Beranda</a>
-  </footer>
-</div>
-
-<!-- Login overlay -->
-<div id="loginOverlay">
-  <div class="login-card">
-    <p style="font-size:1.5rem;margin-bottom:.5rem">🔐</p>
-    <h2>Masuk ke Dashboard</h2>
-    <p>Masukkan Admin Key untuk melihat data tautan.</p>
-    <input type="password" id="adminKeyInput" placeholder="Admin Key" />
-    <button type="button" onclick="doLogin()">Masuk</button>
-    <div class="login-error" id="loginError">Kunci salah, coba lagi.</div>
   </div>
 </div>
 
 <script>
-  // ─────────────────────────────────────────
-  const WORKER_URL = 'https://shortlink-api.revpeak2.workers.dev';
-  const GO_PAGE    = 'https://shortlink-7hj.pages.dev/go.html';
-  // ─────────────────────────────────────────
+  // ══════════════════════════════════════════════
+  const WORKER_URL = 'https://your-worker.workers.dev';
+  const GO_PAGE    = 'https://yourdomain.com/go.html';
+  // ══════════════════════════════════════════════
 
-  const SESSION_KEY = 'sl_admin_key';
+  const S_KEY = 'sl_key';
   let allLinks = [];
-  let adminKey = sessionStorage.getItem(SESSION_KEY) || '';
+  let adminKey = sessionStorage.getItem(S_KEY) || '';
+
+  if (adminKey) { document.getElementById('loginOverlay').style.display = 'none'; load(); }
+
+  document.getElementById('keyInput').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
   function doLogin() {
-    const val = document.getElementById('adminKeyInput').value.trim();
-    if (!val) return;
-    adminKey = val;
-    sessionStorage.setItem(SESSION_KEY, val);
-    document.getElementById('loginError').style.display = 'none';
+    const k = document.getElementById('keyInput').value.trim();
+    if (!k) return;
+    adminKey = k;
+    sessionStorage.setItem(S_KEY, k);
+    document.getElementById('loginErr').style.display = 'none';
     document.getElementById('loginOverlay').style.display = 'none';
-    loadLinks();
+    load();
   }
 
-  document.getElementById('adminKeyInput').addEventListener('keydown', e => {
-    if (e.key === 'Enter') doLogin();
-  });
-
-  // Jika sudah ada key di session
-  if (adminKey) {
-    document.getElementById('loginOverlay').style.display = 'none';
-    loadLinks();
-  }
-
-  async function loadLinks() {
-    setLoading();
+  async function load() {
     try {
-      const res = await fetch(`${WORKER_URL}/api/links`, {
-        headers: { 'Authorization': `Bearer ${adminKey}` }
-      });
-
-      if (res.status === 401) {
-        sessionStorage.removeItem(SESSION_KEY);
-        adminKey = '';
-        document.getElementById('loginOverlay').style.display = 'flex';
-        document.getElementById('loginError').style.display = 'block';
-        setEmpty('Kunci tidak valid.');
-        return;
-      }
-
+      const res = await fetch(`${WORKER_URL}/api/links`, { headers: { 'Authorization': `Bearer ${adminKey}` } });
+      if (res.status === 401) { logout(); return; }
       allLinks = await res.json();
       renderStats(allLinks);
       renderTable(allLinks);
-    } catch (e) {
-      setEmpty('Gagal memuat data. Periksa koneksi anda.');
-    }
+    } catch { renderEmpty('Gagal memuat data. Periksa koneksi anda.'); }
+  }
+
+  function logout() {
+    sessionStorage.removeItem(S_KEY);
+    adminKey = '';
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('loginOverlay').style.display = 'flex';
+    renderEmpty('Login diperlukan.');
   }
 
   function renderStats(links) {
-    const totalClicks = links.reduce((s, l) => s + (l.clicks || 0), 0);
-    const avg = links.length ? (totalClicks / links.length).toFixed(1) : 0;
-    const top = links.reduce((a, b) => (b.clicks > (a.clicks||0) ? b : a), {});
-
-    document.getElementById('statLinks').textContent  = links.length;
-    document.getElementById('statClicks').textContent = totalClicks.toLocaleString();
-    document.getElementById('statAvg').textContent    = avg;
-    document.getElementById('statTop').textContent    = top.code ? `/${top.code}` : '—';
+    const total = links.reduce((s, l) => s + (l.clicks || 0), 0);
+    const avg   = links.length ? (total / links.length).toFixed(1) : 0;
+    const top   = links.reduce((a, b) => (b.clicks > (a.clicks || 0) ? b : a), {});
+    document.getElementById('svLinks').textContent  = links.length.toLocaleString();
+    document.getElementById('svClicks').textContent = total.toLocaleString();
+    document.getElementById('svAvg').textContent    = avg;
+    document.getElementById('svTop').textContent    = top.code ? top.code : '—';
   }
 
   function renderTable(links) {
-    const tbody = document.getElementById('tableBody');
-    if (!links.length) { setEmpty('Belum ada tautan. Buat yang pertama!'); return; }
-
-    tbody.innerHTML = links.map(link => {
-      const date = new Date(link.created_at).toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' });
-      const goUrl = `${GO_PAGE}?c=${link.code}`;
-      return `
-        <tr>
-          <td><span class="code-badge">${esc(link.code)}</span></td>
-          <td class="col-title" style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(link.title || '—')}</td>
-          <td class="col-dest"><div class="dest-cell" title="${esc(link.original_url)}">${esc(link.original_url)}</div></td>
-          <td><span class="clicks-badge">${(link.clicks||0).toLocaleString()}</span></td>
-          <td class="col-date date-cell">${date}</td>
-          <td>
-            <button type="button" class="btn-copy-row" onclick="copyLink('${esc(goUrl)}', this)">Salin</button>
-            <button type="button" class="btn-del" onclick="deleteLink('${esc(link.code)}', this)">Hapus</button>
-          </td>
-        </tr>`;
+    const tb = document.getElementById('tBody');
+    if (!links.length) { renderEmpty('Belum ada tautan.'); return; }
+    tb.innerHTML = links.map(l => {
+      const date  = new Date(l.created_at).toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' });
+      const goUrl = `${GO_PAGE}?c=${esc(l.code)}`;
+      return `<tr>
+        <td><span class="code-tag">${esc(l.code)}</span></td>
+        <td class="col-title" style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.title||'—')}</td>
+        <td class="col-url"><div class="url-cell" title="${esc(l.original_url)}">${esc(l.original_url)}</div></td>
+        <td><span class="click-badge">${(l.clicks||0).toLocaleString()}</span></td>
+        <td class="col-date date-cell">${date}</td>
+        <td>
+          <button type="button" class="action-btn btn-cp" onclick="copyUrl('${esc(goUrl)}',this)">Salin</button>
+          <button type="button" class="action-btn btn-dl" onclick="del('${esc(l.code)}',this)">Hapus</button>
+        </td>
+      </tr>`;
     }).join('');
   }
 
-  function filterTable() {
-    const q = document.getElementById('searchInput').value.toLowerCase();
-    const filtered = allLinks.filter(l =>
-      l.code.toLowerCase().includes(q) ||
-      (l.original_url||'').toLowerCase().includes(q) ||
-      (l.title||'').toLowerCase().includes(q)
-    );
-    renderTable(filtered);
+  function filterTable(q) {
+    const lq = q.toLowerCase();
+    renderTable(allLinks.filter(l =>
+      l.code.toLowerCase().includes(lq) ||
+      (l.original_url||'').toLowerCase().includes(lq) ||
+      (l.title||'').toLowerCase().includes(lq)
+    ));
   }
 
-  async function deleteLink(code, btn) {
+  async function del(code, btn) {
     if (!confirm(`Hapus tautan /${code}?`)) return;
     btn.disabled = true;
-    await fetch(`${WORKER_URL}/api/links/${encodeURIComponent(code)}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${adminKey}` }
-    });
+    await fetch(`${WORKER_URL}/api/links/${encodeURIComponent(code)}`, { method:'DELETE', headers:{'Authorization':`Bearer ${adminKey}`} });
     allLinks = allLinks.filter(l => l.code !== code);
     renderStats(allLinks);
     renderTable(allLinks);
   }
 
-  function copyLink(url, btn) {
+  function copyUrl(url, btn) {
     navigator.clipboard.writeText(url);
     btn.textContent = '✓';
     setTimeout(() => btn.textContent = 'Salin', 1800);
   }
 
-  function setLoading() {
-    document.getElementById('tableBody').innerHTML =
-      `<tr class="loading-row"><td colspan="6"><div class="spinner"></div><p>Memuat data…</p></td></tr>`;
-  }
-
-  function setEmpty(msg) {
-    document.getElementById('tableBody').innerHTML =
-      `<tr><td colspan="6"><div class="empty"><p>🔗</p><p>${msg}</p></div></td></tr>`;
+  function renderEmpty(msg) {
+    document.getElementById('tBody').innerHTML =
+      `<tr><td colspan="6"><div class="tbl-state"><div class="tbl-icon">🔗</div><p>${msg}</p></div></td></tr>`;
   }
 
   function esc(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   }
 </script>
 </body>

@@ -3,172 +3,182 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mengarahkan…</title>
+  <title>Mengarahkan… — ShortLink</title>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- ADSTERRA SOCIAL BAR — tempel script Social Bar anda di sini   -->
+  <!-- Script ini akan tampil otomatis di semua halaman               -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- <script type="text/javascript" src="//KODE_ADSTERRA.js"></script> -->
+  <!-- AKHIR SOCIAL BAR -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:       #080C14;
-      --surface:  #0F1623;
-      --surface2: #162030;
-      --border:   #1E2D42;
-      --accent:   #38BDF8;
-      --accent2:  #0EA5E9;
-      --success:  #34D399;
-      --error:    #F87171;
-      --text:     #E2E8F0;
-      --muted:    #64748B;
+      --bg:        #F4F6FB;
+      --white:     #FFFFFF;
+      --border:    #E2E8F0;
+      --border2:   #CBD5E1;
+      --accent:    #2563EB;
+      --accent-h:  #1D4ED8;
+      --accent-lt: #EFF6FF;
+      --success:   #059669;
+      --error:     #DC2626;
+      --text:      #0F172A;
+      --text2:     #475569;
+      --text3:     #94A3B8;
+      --shadow:    0 1px 3px rgba(0,0,0,.08);
+      --shadow-md: 0 4px 20px rgba(0,0,0,.10);
     }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      padding: 1.5rem 1rem 3rem;
+      padding: 0 1rem 3rem;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(56,189,248,.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(56,189,248,.04) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .wrap { position:relative; z-index:1; width:100%; max-width:560px; }
-
-    /* Logo */
-    .logo {
-      text-align: center;
-      padding: 1.25rem 0 1.5rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .9rem;
-      color: var(--muted);
-      letter-spacing: .1em;
-    }
-    .logo a { color: var(--accent); text-decoration: none; }
-
-    /* ── AD SLOT ──────────────────────────────────── */
-    .ad-slot {
+    /* Navbar */
+    nav {
       width: 100%;
-      min-height: 90px;
-      background: var(--surface);
-      border: 1px dashed var(--border);
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--text); }
+
+    .wrap { width: 100%; max-width: 540px; }
+
+    /* ── AD SLOT ATAS (300×250 atau 728×90) ──────────────────────── */
+    .ad-top {
+      background: var(--white);
+      border: 1.5px dashed var(--border2);
       border-radius: 12px;
+      min-height: 120px;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 1.25rem;
       overflow: hidden;
       position: relative;
+      padding: .5rem;
     }
     .ad-label {
-      font-size: .75rem;
-      color: var(--muted);
-      letter-spacing: .06em;
-      text-transform: uppercase;
       position: absolute;
-      top: .5rem;
-      left: .75rem;
+      top: .35rem; left: .6rem;
+      font-size: .65rem;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: .06em;
     }
-    /* Ganti konten di dalam .ad-inner dengan kode iklan anda */
-    .ad-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      min-height: 90px;
-      color: var(--muted);
-      font-size: .85rem;
+    .ad-ph {
       text-align: center;
-      gap: .25rem;
+      color: var(--text3);
+      font-size: .8rem;
+      line-height: 1.6;
     }
-    /* ─────────────────────────────────────────────── */
 
-    /* Main card */
-    .card {
-      background: var(--surface);
+    /* ── Main card ──────────────────────────────────────────────── */
+    .main-card {
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 1.75rem 1.5rem;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
       margin-bottom: 1.25rem;
-      text-align: center;
     }
 
-    /* Destination URL */
-    .dest-label {
-      font-size: .75rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: .5rem;
+    /* Progress bar */
+    .progress-bar-wrap {
+      height: 4px;
+      background: var(--border);
     }
-    .dest-url {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: .82rem;
-      color: var(--accent);
-      word-break: break-all;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: .65rem .85rem;
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 1s linear;
+    }
+
+    .card-body { padding: 1.75rem 1.5rem; }
+
+    /* Destination */
+    .dest-section {
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+      padding: .85rem 1rem;
+      background: var(--accent-lt);
+      border: 1px solid #BFDBFE;
+      border-radius: 10px;
       margin-bottom: 1.5rem;
-      text-align: left;
+    }
+    .dest-icon {
+      width: 32px; height: 32px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: #fff;
+      font-size: .9rem;
+    }
+    .dest-info { flex: 1; overflow: hidden; }
+    .dest-label { font-size: .72rem; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .2rem; }
+    .dest-url {
+      font-family: 'Outfit', sans-serif;
+      font-size: .88rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* Countdown */
-    .countdown-wrap {
+    .countdown-section {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: .5rem;
-      margin-bottom: 1.5rem;
+      gap: .75rem;
+      padding: 1.25rem 0 1.5rem;
     }
-    .countdown-ring {
-      position: relative;
-      width: 80px;
-      height: 80px;
+    .ring-wrap { position: relative; width: 96px; height: 96px; }
+    .ring-wrap svg { transform: rotate(-90deg); }
+    .ring-bg   { stroke: var(--border); }
+    .ring-fg   { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset .95s linear; }
+    .ring-num {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text);
     }
-    .countdown-ring svg {
-      transform: rotate(-90deg);
-      width: 80px;
-      height: 80px;
-    }
-    .ring-bg { stroke: var(--surface2); }
-    .ring-fg {
-      stroke: var(--accent);
-      stroke-linecap: round;
-      transition: stroke-dashoffset .9s linear;
-    }
-    .countdown-num {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: #fff;
-    }
-    .countdown-text {
+    .countdown-label {
       font-size: .85rem;
-      color: var(--muted);
+      color: var(--text2);
+      text-align: center;
+      line-height: 1.5;
     }
 
     /* Button */
@@ -176,195 +186,242 @@
       width: 100%;
       padding: .95rem;
       background: var(--accent);
-      color: #080C14;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
       font-size: 1rem;
       font-weight: 700;
       border: none;
       border-radius: 10px;
       cursor: pointer;
-      transition: background .2s, transform .1s, opacity .3s;
-      position: relative;
+      transition: background .15s, transform .1s;
     }
+    #btnGo:hover:not(:disabled) { background: var(--accent-h); }
+    #btnGo:active:not(:disabled) { transform: scale(.98); }
     #btnGo:disabled {
-      background: var(--surface2);
-      color: var(--muted);
-      border: 1px solid var(--border);
+      background: var(--border2);
+      color: var(--text3);
       cursor: not-allowed;
     }
-    #btnGo:not(:disabled):hover { background: var(--accent2); }
-    #btnGo:not(:disabled):active { transform: scale(.98); }
 
-    /* Second ad slot (banner bawah — opsional) */
-    .ad-slot-bottom {
-      width: 100%;
-      min-height: 60px;
-      background: var(--surface);
-      border: 1px dashed var(--border);
-      border-radius: 10px;
+    /* ── AD SLOT TENGAH (300×250) ────────────────────────────────── */
+    .ad-mid {
+      background: var(--white);
+      border: 1.5px dashed var(--border2);
+      border-radius: 12px;
+      min-height: 260px;
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 1.25rem;
       overflow: hidden;
-    }
-    .ad-inner-sm {
-      color: var(--muted);
-      font-size: .8rem;
+      position: relative;
     }
 
-    /* Loading state */
-    .loading-card {
-      background: var(--surface);
+    /* ── AD SLOT BAWAH (320×50) ──────────────────────────────────── */
+    .ad-bot {
+      background: var(--white);
+      border: 1.5px dashed var(--border2);
+      border-radius: 10px;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    /* Loading & Error */
+    .state-card {
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 2rem;
+      padding: 2.5rem 1.5rem;
       text-align: center;
-      color: var(--muted);
       margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
     }
     .spinner {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       border: 3px solid var(--border);
       border-top-color: var(--accent);
       border-radius: 50%;
-      animation: spin .8s linear infinite;
+      animation: spin .7s linear infinite;
       margin: 0 auto 1rem;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    .error-card {
-      background: rgba(248,113,113,.08);
-      border: 1px solid rgba(248,113,113,.25);
-      border-radius: 12px;
-      padding: 1.5rem;
-      text-align: center;
-      color: var(--error);
+    .state-icon { font-size: 2rem; margin-bottom: .75rem; }
+    .state-msg  { color: var(--text2); font-size: .95rem; margin-bottom: 1rem; }
+    .btn-back {
+      display: inline-block;
+      padding: .6rem 1.25rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 9px;
+      font-size: .88rem;
+      font-weight: 600;
+      text-decoration: none;
+      font-family: 'Outfit', sans-serif;
     }
 
     footer {
       text-align: center;
-      margin-top: 1.5rem;
-      font-size: .8rem;
-      color: var(--muted);
+      font-size: .78rem;
+      color: var(--text3);
+      margin-top: .5rem;
     }
     footer a { color: var(--accent); text-decoration: none; }
   </style>
 </head>
 <body>
+
+<nav><a class="nav-logo" href="index.html">⚡ Short<span>Link</span></a></nav>
+
 <div class="wrap">
 
-  <div class="logo">⚡ <a href="index.html">shortlink</a></div>
-
-  <!-- ── AD SLOT ATAS (728×90 atau 320×50 mobile) ──────────────── -->
-  <!-- PETUNJUK: Ganti konten .ad-inner dengan kode iklan anda.     -->
-  <!-- Contoh AdSense: tempel <ins class="adsbygoogle"> di sini.    -->
-  <div class="ad-slot" style="min-height:100px;">
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- ADSTERRA AD SLOT ATAS — Banner 728×90 atau 320×50              -->
+  <!-- Tempel kode banner Adsterra anda di dalam div .ad-inner        -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div class="ad-top">
     <span class="ad-label">Iklan</span>
-    <div class="ad-inner">
-      <!-- GANTI BAGIAN INI DENGAN KODE IKLAN ANDA -->
-      <span>[ Slot Iklan — 728×90 / 320×50 ]</span>
-      <span style="font-size:.75rem">Daftarkan akun iklan untuk mengaktifkan monetisasi</span>
-      <!-- AKHIR SLOT IKLAN -->
+    <div class="ad-ph" id="adTopInner">
+      <!-- TEMPEL KODE ADSTERRA BANNER DI SINI -->
+      [ Slot Iklan Atas — 728×90 / 320×50 ]<br>
+      <span style="font-size:.72rem">Daftarkan akun Adsterra untuk mengaktifkan</span>
+      <!-- AKHIR KODE -->
     </div>
   </div>
-  <!-- ─────────────────────────────────────────────────────────── -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
 
-  <!-- Loading state (tampil saat fetch) -->
-  <div class="loading-card" id="loadingCard">
+  <!-- Loading -->
+  <div class="state-card" id="stateLoading">
     <div class="spinner"></div>
-    <p>Memuat tautan…</p>
+    <div class="state-msg">Memuat tautan…</div>
   </div>
 
-  <!-- Error state -->
-  <div class="error-card" id="errorCard" style="display:none">
-    <p style="font-size:1.5rem;margin-bottom:.5rem">🔗</p>
-    <p id="errorMsg">Tautan tidak ditemukan atau sudah kedaluwarsa.</p>
-    <a href="index.html" style="display:inline-block;margin-top:1rem;color:var(--accent);font-size:.9rem">← Buat tautan baru</a>
+  <!-- Error -->
+  <div class="state-card" id="stateError" style="display:none">
+    <div class="state-icon">🔗</div>
+    <div class="state-msg" id="errMsg">Tautan tidak ditemukan atau sudah kedaluwarsa.</div>
+    <a href="index.html" class="btn-back">← Buat Tautan Baru</a>
   </div>
 
-  <!-- Main card (tampil setelah fetch berhasil) -->
-  <div class="card" id="mainCard" style="display:none">
-    <div class="dest-label">Anda akan diarahkan ke</div>
-    <div class="dest-url" id="destUrl"></div>
-
-    <div class="countdown-wrap">
-      <div class="countdown-ring">
-        <svg viewBox="0 0 80 80">
-          <circle class="ring-bg" cx="40" cy="40" r="34" fill="none" stroke-width="6"/>
-          <circle class="ring-fg" id="ringFg" cx="40" cy="40" r="34" fill="none" stroke-width="6"
-            stroke-dasharray="213.6" stroke-dashoffset="0"/>
-        </svg>
-        <div class="countdown-num" id="countNum">10</div>
+  <!-- Main (tampil setelah fetch berhasil) -->
+  <div id="stateMain" style="display:none">
+    <div class="main-card">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
       </div>
-      <div class="countdown-text">detik sebelum tombol aktif</div>
-    </div>
+      <div class="card-body">
 
-    <button type="button" id="btnGo" disabled>
-      Menghitung… (<span id="btnSec">10</span>)
-    </button>
+        <!-- Tujuan -->
+        <div class="dest-section">
+          <div class="dest-icon">🔗</div>
+          <div class="dest-info">
+            <div class="dest-label">Anda akan diarahkan ke</div>
+            <div class="dest-url" id="destUrl"></div>
+          </div>
+        </div>
+
+        <!-- Countdown -->
+        <div class="countdown-section">
+          <div class="ring-wrap">
+            <svg width="96" height="96" viewBox="0 0 96 96">
+              <circle class="ring-bg" cx="48" cy="48" r="40" fill="none" stroke-width="7"/>
+              <circle class="ring-fg" id="ringFg" cx="48" cy="48" r="40" fill="none" stroke-width="7"
+                stroke-dasharray="251.3" stroke-dashoffset="0"/>
+            </svg>
+            <div class="ring-num" id="ringNum">10</div>
+          </div>
+          <div class="countdown-label">
+            Mohon tunggu <strong id="secLabel">10</strong> detik<br>
+            <span style="font-size:.8rem;color:var(--text3)">Halaman akan redirect otomatis setelah tombol ditekan</span>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════ -->
+        <!-- ADSTERRA AD SLOT TENGAH — 300×250 (paling menghasilkan)-->
+        <!-- Tempel kode display banner 300×250 Adsterra di sini    -->
+        <!-- ═══════════════════════════════════════════════════════ -->
+        <div class="ad-mid" style="margin-bottom:1.5rem">
+          <span class="ad-label" style="position:absolute;top:.35rem;left:.6rem;font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Iklan</span>
+          <div class="ad-ph">
+            <!-- TEMPEL KODE ADSTERRA 300×250 DI SINI -->
+            [ Slot Iklan — 300×250 ]<br>
+            <span style="font-size:.72rem">Format paling optimal untuk pendapatan iklan</span>
+            <!-- AKHIR KODE -->
+          </div>
+        </div>
+        <!-- ═══════════════════════════════════════════════════════ -->
+
+        <button type="button" id="btnGo" disabled>
+          Menghitung… (<span id="btnSec">10</span>)
+        </button>
+
+      </div>
+    </div>
   </div>
 
-  <!-- ── AD SLOT BAWAH (banner kecil) ─────────────────────────── -->
-  <div class="ad-slot-bottom">
-    <div class="ad-inner-sm">
-      <!-- GANTI BAGIAN INI DENGAN KODE IKLAN ANDA -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- ADSTERRA AD SLOT BAWAH — Banner 320×50                         -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <div class="ad-bot">
+    <div class="ad-ph">
+      <!-- TEMPEL KODE ADSTERRA 320×50 DI SINI -->
       [ Slot Iklan Bawah — 320×50 ]
-      <!-- AKHIR SLOT IKLAN -->
+      <!-- AKHIR KODE -->
     </div>
   </div>
-  <!-- ─────────────────────────────────────────────────────────── -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
 
   <footer>
-    Layanan pemendek URL oleh <a href="index.html">Shortlink</a>
+    Layanan pemendek URL oleh <a href="index.html">ShortLink</a>
   </footer>
+
 </div>
 
 <script>
-  // ─────────────────────────────────────────
-  // KONFIGURASI
-  const WORKER_URL     = 'https://shortlink-api.revpeak2.workers.dev';
-  const COUNTDOWN_SECS = 10; // durasi countdown (detik)
-  // ─────────────────────────────────────────
+  // ══════════════════════════════════════════════
+  const WORKER_URL     = 'https://your-worker.workers.dev';
+  const COUNTDOWN_SECS = 10;
+  // ══════════════════════════════════════════════
 
-  const params     = new URLSearchParams(location.search);
-  const code       = params.get('c');
-  const loadingEl  = document.getElementById('loadingCard');
-  const errorEl    = document.getElementById('errorCard');
-  const mainEl     = document.getElementById('mainCard');
-  const destUrlEl  = document.getElementById('destUrl');
-  const btnGo      = document.getElementById('btnGo');
-  const countNumEl = document.getElementById('countNum');
-  const btnSecEl   = document.getElementById('btnSec');
-  const ringFg     = document.getElementById('ringFg');
-
-  const CIRCUMFERENCE = 2 * Math.PI * 34; // ~213.6
+  const code = new URLSearchParams(location.search).get('c');
+  const CIRCUMFERENCE = 2 * Math.PI * 40; // ~251.3
 
   function showError(msg) {
-    loadingEl.style.display = 'none';
-    if (msg) document.getElementById('errorMsg').textContent = msg;
-    errorEl.style.display = 'block';
+    document.getElementById('stateLoading').style.display = 'none';
+    if (msg) document.getElementById('errMsg').textContent = msg;
+    document.getElementById('stateError').style.display = 'block';
   }
 
   function startCountdown(targetUrl) {
-    loadingEl.style.display = 'none';
-    mainEl.style.display = 'block';
+    document.getElementById('stateLoading').style.display = 'none';
+    document.getElementById('stateMain').style.display    = 'block';
 
     let sec = COUNTDOWN_SECS;
-    ringFg.style.strokeDashoffset = 0;
+    const ringFg      = document.getElementById('ringFg');
+    const ringNum     = document.getElementById('ringNum');
+    const secLabel    = document.getElementById('secLabel');
+    const btnSec      = document.getElementById('btnSec');
+    const progressBar = document.getElementById('progressBar');
+    const btnGo       = document.getElementById('btnGo');
 
     const tick = () => {
       sec--;
-      countNumEl.textContent = sec;
-      btnSecEl.textContent   = sec;
+      ringNum.textContent  = sec;
+      secLabel.textContent = sec;
+      btnSec.textContent   = sec;
 
       const progress = (COUNTDOWN_SECS - sec) / COUNTDOWN_SECS;
       ringFg.style.strokeDashoffset = CIRCUMFERENCE * progress;
+      progressBar.style.width       = (progress * 100) + '%';
 
       if (sec <= 0) {
         btnGo.disabled    = false;
         btnGo.textContent = 'Lanjutkan ke Tujuan →';
-        btnGo.onclick     = () => window.location.href = targetUrl;
+        btnGo.onclick     = () => { window.location.href = targetUrl; };
+        progressBar.style.width = '100%';
         return;
       }
       setTimeout(tick, 1000);
@@ -375,22 +432,16 @@
 
   async function init() {
     if (!code) return showError('Kode tautan tidak ditemukan di URL.');
-
     try {
       const res  = await fetch(`${WORKER_URL}/api/link/${encodeURIComponent(code)}`);
       const data = await res.json();
+      if (!res.ok || !data.original_url) return showError(data.error || 'Tautan tidak ditemukan.');
 
-      if (!res.ok || !data.original_url) {
-        return showError(data.error || 'Tautan tidak ditemukan.');
-      }
-
-      // Tampilkan URL tujuan (sebagian disembunyikan untuk keamanan)
       const u = new URL(data.original_url);
-      destUrlEl.textContent = `${u.origin}${u.pathname.length > 30 ? u.pathname.slice(0,30)+'…' : u.pathname}`;
-
+      const display = u.origin + (u.pathname.length > 35 ? u.pathname.slice(0, 35) + '…' : u.pathname);
+      document.getElementById('destUrl').textContent = display;
       startCountdown(data.original_url);
-
-    } catch (e) {
+    } catch {
       showError('Gagal memuat tautan. Periksa koneksi internet anda.');
     }
   }

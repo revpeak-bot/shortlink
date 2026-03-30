@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — ShortLink</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F4F6FB;
+      --white:     #FFFFFF;
+      --border:    #E2E8F0;
+      --border2:   #CBD5E1;
+      --accent:    #2563EB;
+      --accent-h:  #1D4ED8;
+      --accent-lt: #EFF6FF;
+      --success:   #059669;
+      --success-lt:#ECFDF5;
+      --error:     #DC2626;
+      --error-lt:  #FEF2F2;
+      --text:      #0F172A;
+      --text2:     #475569;
+      --text3:     #94A3B8;
+      --shadow:    0 1px 3px rgba(0,0,0,.07);
+      --shadow-md: 0 4px 16px rgba(0,0,0,.09);
+    }
+
+    body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; }
+
+    nav {
+      background:var(--white); border-bottom:1px solid var(--border);
+      padding:0 1.5rem; height:60px;
+      display:flex; align-items:center; justify-content:space-between;
+      position:sticky; top:0; z-index:50;
+    }
+    .nav-logo { font-family:'Outfit',sans-serif; font-weight:800; font-size:1.2rem; color:var(--accent); text-decoration:none; }
+    .nav-logo span { color:var(--text); }
+    .nav-right { display:flex; gap:.5rem; align-items:center; }
+    .nav-right a { font-size:.85rem; font-weight:500; color:var(--text2); text-decoration:none; padding:.4rem .8rem; border-radius:8px; transition:background .15s; }
+    .nav-right a:hover { background:var(--bg); }
+    .nav-right a.active { background:var(--accent-lt); color:var(--accent); font-weight:600; }
+
+    /* Login overlay */
+    #loginOverlay {
+      position:fixed; inset:0;
+      background:rgba(244,246,251,.97);
+      z-index:100;
+      display:flex; align-items:center; justify-content:center;
+      padding:1.5rem;
+    }
+    .login-box {
+      background:var(--white); border:1px solid var(--border); border-radius:18px;
+      padding:2rem 1.75rem; width:100%; max-width:360px;
+      text-align:center; box-shadow:var(--shadow-md);
+    }
+    .login-box .icon { font-size:2rem; margin-bottom:.75rem; }
+    .login-box h2 { font-family:'Outfit',sans-serif; font-size:1.2rem; font-weight:700; margin-bottom:.4rem; }
+    .login-box p { color:var(--text2); font-size:.88rem; margin-bottom:1.25rem; }
+    .login-box input {
+      width:100%; border:1.5px solid var(--border2); border-radius:10px;
+      padding:.8rem 1rem; font-family:'DM Sans',sans-serif; font-size:.95rem;
+      outline:none; margin-bottom:.75rem; transition:border-color .2s;
+    }
+    .login-box input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(37,99,235,.1); }
+    .login-box button {
+      width:100%; padding:.85rem; background:var(--accent); color:#fff;
+      font-family:'Outfit',sans-serif; font-weight:700; font-size:.95rem;
+      border:none; border-radius:10px; cursor:pointer;
+    }
+    .login-box button:hover { background:var(--accent-h); }
+    .login-err { color:var(--error); font-size:.82rem; margin-top:.5rem; display:none; }
+
+    .page { max-width:960px; margin:0 auto; padding:1.75rem 1.25rem 4rem; }
+
+    .page-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem; }
+    .page-header h1 { font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:800; }
+    .page-header p { color:var(--text2); font-size:.88rem; }
+
+    /* Quick add */
+    .quick-card {
+      background:var(--white); border:1px solid var(--border); border-radius:14px;
+      padding:1.5rem; box-shadow:var(--shadow); margin-bottom:1.5rem;
+    }
+    .quick-card h2 { font-family:'Outfit',sans-serif; font-size:1rem; font-weight:700; margin-bottom:1rem; }
+    .quick-row { display:flex; gap:.6rem; flex-wrap:wrap; }
+    .quick-row input {
+      flex:1; min-width:160px;
+      border:1.5px solid var(--border2); border-radius:9px;
+      padding:.72rem .9rem;
+      font-family:'DM Sans',sans-serif; font-size:.9rem;
+      color:var(--text); outline:none; transition:border-color .2s;
+    }
+    .quick-row input:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(37,99,235,.1); }
+    .quick-row input::placeholder { color:var(--text3); }
+    .btn-add {
+      padding:.72rem 1.25rem;
+      background:var(--accent); color:#fff;
+      font-family:'Outfit',sans-serif; font-weight:700; font-size:.9rem;
+      border:none; border-radius:9px; cursor:pointer; white-space:nowrap;
+      transition:background .15s;
+    }
+    .btn-add:hover { background:var(--accent-h); }
+    .btn-add:disabled { opacity:.6; cursor:not-allowed; }
+
+    /* Result inline */
+    .add-result {
+      margin-top:.85rem; padding:.75rem 1rem;
+      border-radius:9px; font-size:.88rem;
+      display:none;
+    }
+    .add-result.success {
+      background:var(--success-lt); border:1px solid #A7F3D0; color:var(--success);
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.5rem;
+    }
+    .add-result.error {
+      background:var(--error-lt); border:1px solid #FECACA; color:var(--error);
+      display:block;
+    }
+    .add-url { font-family:'Outfit',monospace; font-weight:600; word-break:break-all; }
+    .btn-cp-inline {
+      padding:.3rem .7rem; border-radius:6px; font-size:.8rem; font-weight:600;
+      cursor:pointer; border:none; background:var(--success); color:#fff;
+      transition:opacity .15s; white-space:nowrap;
+    }
+    .btn-cp-inline:hover { opacity:.8; }
+
+    /* Stats bar */
+    .stats-row { display:flex; gap:.75rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+    .mini-stat {
+      background:var(--white); border:1px solid var(--border); border-radius:12px;
+      padding:1rem 1.25rem; box-shadow:var(--shadow); flex:1; min-width:120px;
+    }
+    .mini-stat .mv { font-family:'Outfit',sans-serif; font-size:1.6rem; font-weight:800; color:var(--text); }
+    .mini-stat .ml { font-size:.78rem; color:var(--text2); margin-top:.2rem; }
+
+    /* Table */
+    .table-card { background:var(--white); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow); overflow:hidden; }
+    .table-top { padding:1rem 1.25rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:.75rem; }
+    .table-top h2 { font-family:'Outfit',sans-serif; font-size:1rem; font-weight:700; }
+    .table-controls { display:flex; gap:.6rem; align-items:center; }
+    .search-wrap { position:relative; }
+    .search-wrap input {
+      background:var(--bg); border:1px solid var(--border2); border-radius:9px;
+      padding:.52rem .85rem .52rem 2.1rem; font-size:.85rem; font-family:'DM Sans',sans-serif;
+      color:var(--text); outline:none; width:190px; transition:border-color .2s;
+    }
+    .search-wrap input:focus { border-color:var(--accent); }
+    .search-wrap input::placeholder { color:var(--text3); }
+    .search-wrap svg { position:absolute; left:.65rem; top:50%; transform:translateY(-50%); color:var(--text3); width:14px; height:14px; pointer-events:none; }
+    .btn-refresh {
+      padding:.52rem .9rem; background:var(--bg); border:1px solid var(--border2);
+      border-radius:9px; font-size:.85rem; color:var(--text2); cursor:pointer;
+      transition:border-color .15s;
+    }
+    .btn-refresh:hover { border-color:var(--accent); color:var(--accent); }
+
+    table { width:100%; border-collapse:collapse; }
+    thead tr { background:var(--bg); }
+    th { text-align:left; padding:.72rem 1rem; font-size:.72rem; font-weight:600; color:var(--text2); letter-spacing:.05em; text-transform:uppercase; border-bottom:1px solid var(--border); }
+    tbody tr { border-bottom:1px solid var(--border); transition:background .12s; }
+    tbody tr:last-child { border:none; }
+    tbody tr:hover { background:#FAFBFC; }
+    td { padding:.82rem 1rem; font-size:.88rem; vertical-align:middle; }
+
+    .code-tag { display:inline-block; background:var(--accent-lt); color:var(--accent); border:1px solid #BFDBFE; border-radius:6px; padding:.2rem .55rem; font-family:'Outfit',monospace; font-size:.82rem; font-weight:600; white-space:nowrap; }
+    .url-cell { max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text2); font-size:.82rem; }
+    .click-val { font-family:'Outfit',sans-serif; font-weight:700; color:var(--success); }
+    .date-cell { color:var(--text3); font-size:.8rem; white-space:nowrap; }
+
+    .act-btn { padding:.28rem .6rem; border-radius:6px; font-size:.78rem; font-weight:600; cursor:pointer; border:none; transition:opacity .15s; font-family:'DM Sans',sans-serif; }
+    .act-btn:hover { opacity:.75; }
+    .btn-c { background:var(--accent-lt); color:var(--accent); margin-right:.3rem; }
+    .btn-d { background:var(--error-lt); color:var(--error); }
+
+    .tbl-state { text-align:center; padding:3rem 1rem; color:var(--text2); }
+    .tbl-icon { font-size:2rem; margin-bottom:.5rem; }
+    .spinner { width:28px; height:28px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .7s linear infinite; margin:0 auto .75rem; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    @media(max-width:600px) { .col-url, .col-date { display:none; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">⚡ Short<span>Link</span></a>
+  <div class="nav-right">
+    <a href="index.html">Beranda</a>
+    <a href="dashboard.html">Statistik</a>
+    <a href="admin.html" class="active">Admin</a>
+  </div>
+</nav>
+
+<!-- Login -->
+<div id="loginOverlay">
+  <div class="login-box">
+    <div class="icon">🔐</div>
+    <h2>Admin Panel</h2>
+    <p>Masukkan Admin Key untuk melanjutkan.</p>
+    <input type="password" id="keyInput" placeholder="Admin Key" />
+    <button type="button" onclick="doLogin()">Masuk</button>
+    <div class="login-err" id="loginErr">Kunci salah, coba lagi.</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1>⚙️ Admin Panel</h1>
+      <p>Buat, kelola, dan hapus tautan pendek.</p>
+    </div>
+    <button type="button" class="btn-refresh" onclick="load()">↻ Muat Ulang</button>
+  </div>
+
+  <!-- Quick add -->
+  <div class="quick-card">
+    <h2>+ Buat Tautan Baru</h2>
+    <div class="quick-row">
+      <input type="url" id="qUrl"   placeholder="URL tujuan (wajib)" />
+      <input type="text" id="qTitle" placeholder="Judul (opsional)" />
+      <input type="text" id="qCode"  placeholder="Kode kustom (opsional)" maxlength="20" />
+      <button type="button" class="btn-add" id="btnAdd" onclick="addLink()">Buat</button>
+    </div>
+    <div class="add-result" id="addResult"></div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="mini-stat"><div class="mv" id="svLinks">—</div><div class="ml">Total Tautan</div></div>
+    <div class="mini-stat"><div class="mv" id="svClicks">—</div><div class="ml">Total Klik</div></div>
+    <div class="mini-stat"><div class="mv" id="svAvg">—</div><div class="ml">Rata-rata Klik</div></div>
+    <div class="mini-stat"><div class="mv" id="svTop" style="font-size:1rem">—</div><div class="ml">Paling Populer</div></div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-card">
+    <div class="table-top">
+      <h2>Semua Tautan</h2>
+      <div class="table-controls">
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" placeholder="Cari…" oninput="filterTable(this.value)" />
+        </div>
+      </div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Kode</th>
+          <th>Judul</th>
+          <th class="col-url">URL Tujuan</th>
+          <th>Klik</th>
+          <th class="col-date">Dibuat</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="tBody">
+        <tr><td colspan="6"><div class="tbl-state"><div class="spinner"></div><p>Memuat…</p></div></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  // ══════════════════════════════════════════════
+  const WORKER_URL = 'https://your-worker.workers.dev';
+  const GO_PAGE    = 'https://yourdomain.com/go.html';
+  // ══════════════════════════════════════════════
+
+  const S_KEY = 'sl_key';
+  let allLinks = [];
+  let adminKey = sessionStorage.getItem(S_KEY) || '';
+
+  if (adminKey) { document.getElementById('loginOverlay').style.display = 'none'; load(); }
+  document.getElementById('keyInput').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  document.getElementById('qUrl').addEventListener('keydown', e => { if (e.key === 'Enter') addLink(); });
+
+  function doLogin() {
+    const k = document.getElementById('keyInput').value.trim();
+    if (!k) return;
+    adminKey = k;
+    sessionStorage.setItem(S_KEY, k);
+    document.getElementById('loginErr').style.display = 'none';
+    document.getElementById('loginOverlay').style.display = 'none';
+    load();
+  }
+
+  async function load() {
+    setLoading();
+    try {
+      const res = await fetch(`${WORKER_URL}/api/links`, { headers: { 'Authorization': `Bearer ${adminKey}` } });
+      if (res.status === 401) { logout(); return; }
+      allLinks = await res.json();
+      renderStats(allLinks);
+      renderTable(allLinks);
+    } catch { renderEmpty('Gagal memuat data.'); }
+  }
+
+  function logout() {
+    sessionStorage.removeItem(S_KEY);
+    adminKey = '';
+    document.getElementById('loginErr').style.display = 'block';
+    document.getElementById('loginOverlay').style.display = 'flex';
+  }
+
+  async function addLink() {
+    const url   = document.getElementById('qUrl').value.trim();
+    const title = document.getElementById('qTitle').value.trim();
+    const code  = document.getElementById('qCode').value.trim();
+    const btn   = document.getElementById('btnAdd');
+    const res_el= document.getElementById('addResult');
+
+    res_el.className = 'add-result';
+    if (!url) { res_el.className = 'add-result error'; res_el.textContent = 'URL wajib diisi.'; return; }
+
+    btn.disabled = true; btn.textContent = '…';
+
+    try {
+      const res  = await fetch(`${WORKER_URL}/api/shorten`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ original_url: url, title: title || undefined, custom_code: code || undefined })
+      });
+      const data = await res.json();
+      if (!res.ok) { res_el.className = 'add-result error'; res_el.textContent = data.error || 'Gagal membuat tautan.'; return; }
+
+      const shortUrl = `${GO_PAGE}?c=${data.code}`;
+      res_el.className = 'add-result success';
+      res_el.innerHTML = `<span class="add-url">${esc(shortUrl)}</span><button type="button" class="btn-cp-inline" onclick="cpInline('${esc(shortUrl)}',this)">Salin</button>`;
+      document.getElementById('qUrl').value   = '';
+      document.getElementById('qTitle').value = '';
+      document.getElementById('qCode').value  = '';
+      load();
+    } catch { res_el.className = 'add-result error'; res_el.textContent = 'Gagal menghubungi server.'; }
+    finally { btn.disabled = false; btn.textContent = 'Buat'; }
+  }
+
+  function cpInline(url, btn) {
+    navigator.clipboard.writeText(url);
+    btn.textContent = '✓';
+    setTimeout(() => btn.textContent = 'Salin', 2000);
+  }
+
+  function renderStats(links) {
+    const total = links.reduce((s, l) => s + (l.clicks || 0), 0);
+    const avg   = links.length ? (total / links.length).toFixed(1) : 0;
+    const top   = links.reduce((a, b) => (b.clicks > (a.clicks||0) ? b : a), {});
+    document.getElementById('svLinks').textContent  = links.length.toLocaleString();
+    document.getElementById('svClicks').textContent = total.toLocaleString();
+    document.getElementById('svAvg').textContent    = avg;
+    document.getElementById('svTop').textContent    = top.code || '—';
+  }
+
+  function renderTable(links) {
+    const tb = document.getElementById('tBody');
+    if (!links.length) { renderEmpty('Belum ada tautan.'); return; }
+    tb.innerHTML = links.map(l => {
+      const date  = new Date(l.created_at).toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' });
+      const goUrl = `${GO_PAGE}?c=${esc(l.code)}`;
+      return `<tr>
+        <td><span class="code-tag">${esc(l.code)}</span></td>
+        <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(l.title||'—')}</td>
+        <td class="col-url"><div class="url-cell" title="${esc(l.original_url)}">${esc(l.original_url)}</div></td>
+        <td><span class="click-val">${(l.clicks||0).toLocaleString()}</span></td>
+        <td class="col-date date-cell">${date}</td>
+        <td>
+          <button type="button" class="act-btn btn-c" onclick="cpLink('${esc(goUrl)}',this)">Salin</button>
+          <button type="button" class="act-btn btn-d" onclick="del('${esc(l.code)}',this)">Hapus</button>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  function filterTable(q) {
+    const lq = q.toLowerCase();
+    renderTable(allLinks.filter(l =>
+      l.code.toLowerCase().includes(lq) ||
+      (l.original_url||'').toLowerCase().includes(lq) ||
+      (l.title||'').toLowerCase().includes(lq)
+    ));
+  }
+
+  async function del(code, btn) {
+    if (!confirm(`Hapus tautan /${code}?`)) return;
+    btn.disabled = true;
+    await fetch(`${WORKER_URL}/api/links/${encodeURIComponent(code)}`, { method:'DELETE', headers:{'Authorization':`Bearer ${adminKey}`} });
+    allLinks = allLinks.filter(l => l.code !== code);
+    renderStats(allLinks);
+    renderTable(allLinks);
+  }
+
+  function cpLink(url, btn) {
+    navigator.clipboard.writeText(url);
+    btn.textContent = '✓';
+    setTimeout(() => btn.textContent = 'Salin', 1800);
+  }
+
+  function setLoading() {
+    document.getElementById('tBody').innerHTML =
+      `<tr><td colspan="6"><div class="tbl-state"><div class="spinner"></div><p>Memuat…</p></div></td></tr>`;
+  }
+
+  function renderEmpty(msg) {
+    document.getElementById('tBody').innerHTML =
+      `<tr><td colspan="6"><div class="tbl-state"><div class="tbl-icon">🔗</div><p>${msg}</p></div></td></tr>`;
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+</script>
+</body>
+</html>
