@@ -5,10 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mengarahkan… — ShortLink</title>
 
-  <!-- ═══════════════════════════════════════════════════════════════ -->
-  <!-- ADSTERRA SOCIAL BAR — tempel script Social Bar anda di sini   -->
-  <!-- <script type="text/javascript" src="//KODE_ADSTERRA.js"></script> -->
-  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SLOT 1: SOCIAL BAR — tempel di <head>, tampil otomatis            -->
+  <!-- Centang "Social Bar" saat Create Ad Unit, salin scriptnya ke sini -->
+   <script src="https://pl29021256.profitablecpmratenetwork.com/b9/8b/b0/b98bb0ca0e6b876e40fea6758d0e371d.js"></script>
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SLOT 2: POPUNDER — tempel di <head>, otomatis terbuka di tab baru -->
+  <!-- Centang "Popunder" saat Create Ad Unit, salin scriptnya ke sini   -->
+  <script src="https://pl29021247.profitablecpmratenetwork.com/ce/08/b0/ce08b096fc9140f96b87b09310f36ed4.js"></script>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,7 +48,6 @@
       min-height: 100vh;
     }
 
-    /* Navbar */
     nav {
       background: var(--white);
       border-bottom: 1px solid var(--border);
@@ -77,24 +84,28 @@
     }
     .step-line.done { background: var(--success); }
 
-    /* Wrap */
     .wrap { max-width: 560px; margin: 0 auto; padding: 1.25rem 1rem 4rem; }
 
-    /* ── AD SLOT ATAS ──────────────────────────────────────── */
-    .ad-top {
-      background: var(--white); border: 1.5px dashed var(--border2);
-      border-radius: 12px; min-height: 110px;
+    /* ═══════════════════════════════════════════════════════════
+       SLOT 3: BANNER 320×50 — di atas halaman
+       ═══════════════════════════════════════════════════════════ */
+    .ad-320x50 {
+      background: var(--white);
+      border: 1.5px dashed var(--border2);
+      border-radius: 10px;
+      min-height: 60px;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1.25rem; overflow: hidden; position: relative; padding: .5rem;
+      margin-bottom: 1.25rem;
+      overflow: hidden; position: relative;
     }
     .ad-label {
-      position: absolute; top: .35rem; left: .6rem;
-      font-size: .65rem; color: var(--text3);
+      position: absolute; top: .3rem; left: .55rem;
+      font-size: .62rem; color: var(--text3);
       text-transform: uppercase; letter-spacing: .06em;
     }
-    .ad-ph { text-align: center; color: var(--text3); font-size: .8rem; line-height: 1.6; }
+    .ad-ph { text-align: center; color: var(--text3); font-size: .78rem; line-height: 1.5; }
 
-    /* ── Main card ─────────────────────────────────────────── */
+    /* Main card */
     .main-card {
       background: var(--white); border: 1px solid var(--border);
       border-radius: 16px; box-shadow: var(--shadow-md);
@@ -102,7 +113,6 @@
     }
     .prog-wrap { height: 5px; background: var(--border); }
     .prog-bar  { height: 100%; background: var(--accent); width: 0%; transition: width 1s linear; }
-
     .card-body { padding: 1.5rem 1.25rem; }
 
     /* Destination */
@@ -142,26 +152,38 @@
     }
     .cd-label { font-size: .82rem; color: var(--text2); text-align: center; }
 
-    /* ── AD SLOT TENGAH 300×250 ────────────────────────────── */
-    .ad-mid {
-      background: var(--bg); border: 1.5px dashed var(--border2);
-      border-radius: 12px; min-height: 275px;
+    /* ═══════════════════════════════════════════════════════════
+       SLOT 4: BANNER 300×250 — di tengah card, saat countdown
+       Format terbaik untuk pendapatan Adsterra
+       ═══════════════════════════════════════════════════════════ */
+    .ad-300x250 {
+      background: var(--bg);
+      border: 1.5px dashed var(--border2);
+      border-radius: 12px;
+      min-height: 260px;
+      width: 300px;
+      margin: 1.25rem auto 1.25rem;
       display: flex; align-items: center; justify-content: center;
-      margin: 1.25rem 0; overflow: hidden; position: relative;
+      overflow: hidden; position: relative;
     }
 
-    /* ── AD SLOT EKSTRA 320×100 ────────────────────────────── */
-    .ad-extra {
-      background: var(--bg); border: 1.5px dashed var(--border2);
-      border-radius: 10px; min-height: 115px;
+    /* ═══════════════════════════════════════════════════════════
+       SLOT 5: BANNER 320×50 kedua — di bawah iklan 300×250
+       ═══════════════════════════════════════════════════════════ */
+    .ad-320x50-2 {
+      background: var(--bg);
+      border: 1.5px dashed var(--border2);
+      border-radius: 10px;
+      min-height: 60px;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem; overflow: hidden; position: relative;
+      margin-bottom: 1.5rem;
+      overflow: hidden; position: relative;
     }
 
     /* Scroll hint */
     .scroll-hint-wrap {
       display: flex; align-items: center; justify-content: center;
-      padding: .85rem 0 1rem;
+      padding: .75rem 0 1rem;
     }
     .scroll-hint {
       font-size: .78rem; color: var(--text3);
@@ -170,7 +192,7 @@
     }
     @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
 
-    /* ── Tombol utama — besar & di paling bawah ────────────── */
+    /* Tombol utama */
     .btn-next {
       display: block; width: 100%;
       padding: 1.15rem 1rem 1.25rem;
@@ -180,17 +202,19 @@
       border: none; border-radius: 14px; cursor: pointer;
       box-shadow: 0 5px 18px rgba(37,99,235,.35);
       transition: background .15s, transform .1s, box-shadow .15s;
-      text-align: center; letter-spacing: .01em;
+      text-align: center;
     }
     .btn-next:hover:not(:disabled) { background: var(--accent-h); box-shadow: 0 7px 22px rgba(37,99,235,.4); }
     .btn-next:active:not(:disabled) { transform: scale(.98); }
     .btn-next:disabled { background: var(--border2); color: var(--text3); cursor: not-allowed; box-shadow: none; }
     .btn-sub { text-align: center; font-size: .75rem; color: var(--text3); margin-top: .65rem; }
 
-    /* ── AD BAWAH 320×50 ───────────────────────────────────── */
+    /* ═══════════════════════════════════════════════════════════
+       SLOT 6: BANNER 320×50 ketiga — di bawah tombol
+       ═══════════════════════════════════════════════════════════ */
     .ad-bot {
       background: var(--white); border: 1.5px dashed var(--border2);
-      border-radius: 10px; min-height: 65px;
+      border-radius: 10px; min-height: 60px;
       display: flex; align-items: center; justify-content: center;
       margin-top: 1.25rem; overflow: hidden;
     }
@@ -228,7 +252,6 @@
 
 <nav><a class="nav-logo" href="index.html">⚡ Short<span>Link</span></a></nav>
 
-<!-- Step indicator -->
 <div class="step-bar">
   <div class="step-dot active" id="dot1">1</div>
   <div class="step-line" id="line1"></div>
@@ -255,12 +278,14 @@
   <!-- Main -->
   <div id="stateMain" style="display:none">
 
-    <!-- AD ATAS -->
-    <div class="ad-top">
+    <!-- ══════════════════════════════════════════════════════════
+         SLOT 3: Banner 320×50 — ATAS HALAMAN
+         Ganti konten di bawah dengan kode Adsterra anda
+         ══════════════════════════════════════════════════════════ -->
+    <div class="ad-320x50">
       <span class="ad-label">Iklan</span>
-      <div class="ad-ph">
-        <!-- TEMPEL KODE ADSTERRA BANNER 728×90 / 320×50 DI SINI -->
-       <script>
+      <!-- TEMPEL KODE BANNER 320×50 ADSTERRA DI SINI -->
+  <script>
   atOptions = {
     'key' : 'b074f3e1edcfcd44d15422266d924ec9',
     'format' : 'iframe',
@@ -271,8 +296,7 @@
 </script>
 <script src="https://www.highperformanceformat.com/b074f3e1edcfcd44d15422266d924ec9/invoke.js"></script>
 
-        <!-- AKHIR KODE -->
-      </div>
+      <!-- AKHIR KODE -->
     </div>
 
     <!-- Card utama -->
@@ -290,7 +314,9 @@
         </div>
 
         <!-- Judul langkah -->
-        <div class="step-title" id="stepTitle">Langkah <span>1</span> dari 3 — Harap tunggu</div>
+        <div class="step-title" id="stepTitle">
+          Langkah <span>1</span> dari 3 — Harap tunggu
+        </div>
 
         <!-- Countdown -->
         <div class="countdown-box">
@@ -305,32 +331,14 @@
           <div class="cd-label">detik tersisa di langkah ini</div>
         </div>
 
-        <!-- AD TENGAH 300×250 -->
-        <div class="ad-mid">
-          <span class="ad-label" style="position:absolute;top:.35rem;left:.6rem;font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Iklan</span>
-          <div class="ad-ph">
-            <!-- TEMPEL KODE ADSTERRA 300×250 DI SINI -->
-            <script>
-  atOptions = {
-    'key' : 'cd149a54c8fbe03a626b9c4db34a9521',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/cd149a54c8fbe03a626b9c4db34a9521/invoke.js"></script>
-<br>
-            <span style="font-size:.72rem">Format paling optimal untuk pendapatan</span>
-            <!-- AKHIR KODE -->
-          </div>
-        </div>
-
-        <!-- AD EKSTRA 320×100 -->
-        <div class="ad-extra">
-          <span class="ad-label" style="position:absolute;top:.35rem;left:.6rem;font-size:.65rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Iklan</span>
-          <div class="ad-ph">
-            <!-- TEMPEL KODE ADSTERRA 320×100 DI SINI -->
+        <!-- ══════════════════════════════════════════════════════
+             SLOT 4: Banner 300×250 — TENGAH CARD (utama)
+             Format terbaik untuk CPM Adsterra
+             Tampil selama countdown berlangsung
+             ══════════════════════════════════════════════════════ -->
+        <div class="ad-300x250">
+          <span class="ad-label" style="position:absolute;top:.3rem;left:.55rem;font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Iklan</span>
+          <!-- TEMPEL KODE BANNER 300×250 ADSTERRA DI SINI -->
 <script>
   atOptions = {
     'key' : 'cd149a54c8fbe03a626b9c4db34a9521',
@@ -342,11 +350,28 @@
 </script>
 <script src="https://www.highperformanceformat.com/cd149a54c8fbe03a626b9c4db34a9521/invoke.js"></script>
 
-            <!-- AKHIR KODE -->
-          </div>
         </div>
 
-        <!-- Scroll hint (sembunyikan saat tombol aktif) -->
+        <!-- ══════════════════════════════════════════════════════
+             SLOT 5: Banner 320×50 kedua — BAWAH IKLAN 300×250
+             ══════════════════════════════════════════════════════ -->
+        <div class="ad-320x50-2">
+          <span class="ad-label" style="position:absolute;top:.3rem;left:.55rem;font-size:.62rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em">Iklan</span>
+
+<script>
+  atOptions = {
+    'key' : 'b074f3e1edcfcd44d15422266d924ec9',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://www.highperformanceformat.com/b074f3e1edcfcd44d15422266d924ec9/invoke.js"></script>
+
+        </div>
+
+        <!-- Scroll hint -->
         <div class="scroll-hint-wrap" id="scrollHintWrap">
           <div class="scroll-hint">↓ Scroll ke bawah untuk tombol lanjut</div>
         </div>
@@ -360,23 +385,23 @@
       </div>
     </div>
 
-    <!-- AD BAWAH -->
+    <!-- ══════════════════════════════════════════════════════════
+         SLOT 6: Banner 320×50 ketiga — BAWAH TOMBOL
+         ══════════════════════════════════════════════════════════ -->
     <div class="ad-bot">
-      <div class="ad-ph">
-        <!-- TEMPEL KODE ADSTERRA 320×50 DI SINI -->
+
 <script>
   atOptions = {
-    'key' : 'cd149a54c8fbe03a626b9c4db34a9521',
+    'key' : 'b074f3e1edcfcd44d15422266d924ec9',
     'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
+    'height' : 50,
+    'width' : 320,
     'params' : {}
   };
 </script>
-<script src="https://www.highperformanceformat.com/cd149a54c8fbe03a626b9c4db34a9521/invoke.js"></script>
+<script src="https://www.highperformanceformat.com/b074f3e1edcfcd44d15422266d924ec9/invoke.js"></script>
 
-        <!-- AKHIR KODE -->
-      </div>
+      <!-- AKHIR KODE -->
     </div>
 
     <footer>
@@ -389,30 +414,29 @@
 
 <script>
   // ══════════════════════════════════════════════
-  const WORKER_URL     = 'https://shortlink-api.revpeak2.workers.dev';
+  const WORKER_URL     = 'https://your-worker.workers.dev';
   const COUNTDOWN_SECS = 15;
   const TOTAL_STEPS    = 3;
   // ══════════════════════════════════════════════
 
   const CIRCUMFERENCE = 2 * Math.PI * 37; // ~232.5
 
-  const code      = new URLSearchParams(location.search).get('c');
-  let targetUrl   = '';
-  let timerHandle = null;
+  const code    = new URLSearchParams(location.search).get('c');
+  let targetUrl = '';
+  let timerH    = null;
 
-  // Elemen
-  const elLoading       = document.getElementById('stateLoading');
-  const elError         = document.getElementById('stateError');
-  const elMain          = document.getElementById('stateMain');
-  const mainCard        = document.getElementById('mainCard');
-  const ringFg          = document.getElementById('ringFg');
-  const ringNum         = document.getElementById('ringNum');
-  const progBar         = document.getElementById('progBar');
-  const btnNext         = document.getElementById('btnNext');
-  const btnSec          = document.getElementById('btnSec');
-  const btnSub          = document.getElementById('btnSub');
-  const stepTitle       = document.getElementById('stepTitle');
-  const scrollHintWrap  = document.getElementById('scrollHintWrap');
+  const elLoading      = document.getElementById('stateLoading');
+  const elError        = document.getElementById('stateError');
+  const elMain         = document.getElementById('stateMain');
+  const mainCard       = document.getElementById('mainCard');
+  const ringFg         = document.getElementById('ringFg');
+  const ringNum        = document.getElementById('ringNum');
+  const progBar        = document.getElementById('progBar');
+  const btnNext        = document.getElementById('btnNext');
+  const btnSec         = document.getElementById('btnSec');
+  const btnSub         = document.getElementById('btnSub');
+  const stepTitle      = document.getElementById('stepTitle');
+  const scrollHintWrap = document.getElementById('scrollHintWrap');
   const dots  = [null, document.getElementById('dot1'), document.getElementById('dot2'), document.getElementById('dot3')];
   const lines = [null, document.getElementById('line1'), document.getElementById('line2')];
 
@@ -423,54 +447,45 @@
   }
 
   function updateDots(step) {
-    for (let i = 1; i <= TOTAL_STEPS; i++) {
+    for (let i = 1; i <= TOTAL_STEPS; i++)
       dots[i].className = 'step-dot' + (i < step ? ' done' : i === step ? ' active' : '');
-    }
-    for (let i = 1; i < TOTAL_STEPS; i++) {
+    for (let i = 1; i < TOTAL_STEPS; i++)
       lines[i].className = 'step-line' + (i < step ? ' done' : '');
-    }
   }
 
   function runStep(step) {
     updateDots(step);
 
     const isLast = (step === TOTAL_STEPS);
-
-    // Judul
     stepTitle.innerHTML = `Langkah <span>${step}</span> dari ${TOTAL_STEPS} — ${isLast ? '🎯 Langkah terakhir!' : 'Harap tunggu'}`;
 
-    // Reset countdown visual
+    // Reset ring & progress bar
     ringFg.style.transition  = 'none';
     progBar.style.transition = 'none';
     ringFg.style.strokeDashoffset = 0;
     progBar.style.width = '0%';
-    void ringFg.getBoundingClientRect(); // reflow
+    void ringFg.getBoundingClientRect();
     ringFg.style.transition  = 'stroke-dashoffset .95s linear';
     progBar.style.transition = 'width 1s linear';
 
-    // Animasi card
+    // Animasi slide card
     mainCard.classList.remove('step-anim');
     void mainCard.offsetHeight;
     mainCard.classList.add('step-anim');
 
-    // Scroll ke atas
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // State tombol
-    btnNext.disabled = true;
+    btnNext.disabled    = true;
     btnNext.textContent = `Menghitung… (15)`;
-    btnSec.textContent  = 15;
     btnNext.onclick     = null;
     scrollHintWrap.style.display = 'flex';
     btnSub.textContent  = 'Harap tunggu hingga countdown selesai';
 
     let sec = COUNTDOWN_SECS;
+    if (timerH) clearInterval(timerH);
 
-    if (timerHandle) clearInterval(timerHandle);
-
-    timerHandle = setInterval(() => {
+    timerH = setInterval(() => {
       sec--;
-
       ringNum.textContent = sec;
       btnNext.textContent = `Menghitung… (${sec})`;
 
@@ -479,9 +494,7 @@
       progBar.style.width = (ratio * 100) + '%';
 
       if (sec <= 0) {
-        clearInterval(timerHandle);
-
-        // Aktifkan tombol
+        clearInterval(timerH);
         btnNext.disabled = false;
         scrollHintWrap.style.display = 'none';
 
@@ -499,7 +512,6 @@
           };
         }
 
-        // Scroll ke tombol supaya mudah ditemukan
         setTimeout(() => {
           btnNext.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 400);
@@ -515,14 +527,12 @@
       if (!res.ok || !data.original_url) return showError(data.error || 'Tautan tidak ditemukan.');
 
       targetUrl = data.original_url;
-
-      const u = new URL(targetUrl);
+      const u   = new URL(targetUrl);
       document.getElementById('destUrl').textContent =
         u.origin + (u.pathname.length > 32 ? u.pathname.slice(0, 32) + '…' : u.pathname);
 
       elLoading.style.display = 'none';
       elMain.style.display    = 'block';
-
       runStep(1);
     } catch {
       showError('Gagal memuat tautan. Periksa koneksi internet anda.');
